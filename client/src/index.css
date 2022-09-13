@@ -11,3 +11,56 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* antd overriding */
+input{
+  height: 2.5rem;
+}
+input:focus{
+  outline: none !important;
+  border: 1px solid grey !important;
+}
+.ant-btn-primary{
+  height: 40px !important;
+  width: 100% !important;
+  margin-top: 1rem !important;
+}
+label{
+  font-size: 1rem !important;
+}
+.ant-form-item{
+  margin-bottom: .5rem !important;
+  margin-top: .5rem !important;
+}
+
+/* common */
+.card{
+  box-shadow: 1px 0 2px grey, inset 0 1px 5px rgb(235, 234, 234);
+  outline: none;
+  /* border: 1px solid rgb(188, 186, 186); */
+}
+.card-title{
+  font-size: 1.5rem;  
+  font-weight: bold;
+}
+.normal-text{
+  font-size: 1rem;
+}
+.anchor{
+  color: rgb(4, 4, 63);
+  text-decoration: underline;
+}
+.anchor:hover{
+  color: black;
+}
+
+/* register page */
+.authentication{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* .authentication-form{
+
+} */
