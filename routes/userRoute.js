@@ -10,9 +10,7 @@ router.get("/test", (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const userExists = User.findOne({ email: req.body.email });
-    if (userExists) {
-      res.status(200).send({ message: "User already exists.", success: false });
-    }
+
     const password = req.body.password;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -21,9 +19,13 @@ router.post("/register", async (req, res) => {
     const newUser = new User();
     await newUser.save();
 
-    res
-      .status(200)
-      .send({ message: "New user created successfully.", success: true });
+    if (userExists) {
+      res.status(200).send({ message: "User already exists.", success: false });
+    }
+      res
+        .status(200)
+        .send({ message: "New user created successfully.", success: true });
+ 
   } catch (error) {
     res
       .status(500)

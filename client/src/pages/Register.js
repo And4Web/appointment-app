@@ -1,12 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Form, Input, Button } from "antd";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function Register() {
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/user/register", values);
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.success(response.data.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong.")
+    }
 
-  const onFinish = values => {
     // console.log("input from the form: ", values)
-  }
+  };
 
   return (
     <div className="authentication">
@@ -22,7 +34,9 @@ function Register() {
           <Form.Item label="Password" name="password">
             <Input type="password" placeholder="Enter your password" />
           </Form.Item>
-          <Button type="primary" htmlType="submit">REGISTER</Button>
+          <Button type="primary" htmlType="submit">
+            REGISTER
+          </Button>
           <Link to="/login" className="anchor">
             Have an account? Login here
           </Link>
