@@ -17,7 +17,7 @@ function Register() {
       toast.error("Something went wrong.")
     }
 
-    // console.log("input from the form: ", values)
+    console.log("input from the Register.js: ", values)
   };
 
   return (
