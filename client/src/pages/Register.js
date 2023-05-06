@@ -8,16 +8,21 @@ function Register() {
   const onFinish = async (values) => {
     try {
       const response = await axios.post("http://localhost:5000/api/user/register", values);
+      
+
       if (response.data.success) {
+        console.log("Register.js data success: ", response.data)
         toast.success(response.data.message);
       } else {
+        console.log("Register.js message: ", response.data)
         toast.success(response.data.message);
       }
     } catch (error) {
+      console.log("Register.js error: ", error)
       toast.error("Something went wrong.")
     }
 
-    console.log("input from the Register.js: ", values)
+    // console.log("input from the Register.js: ", values)
   };
 
   return (
