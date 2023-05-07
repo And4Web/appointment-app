@@ -1,7 +1,11 @@
 import React, {useEffect} from "react";
 import axios from "axios";
 
+import {useSelector, useDispatch} from 'react-redux';
+
 function Home() {
+  const loading = useSelector(state=>state.alerts);
+  console.log("Loading Home.js: ", loading);
 
   const getData = async () => {
     try {
@@ -19,6 +23,7 @@ function Home() {
   useEffect(()=>{
     getData();
   }, [])
+
   return (
     <div className="home">
       <h1 className="home-title">Home</h1>
