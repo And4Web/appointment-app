@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 
 function Home() {
   const loading = useSelector(state=>state.alerts);
-  console.log("Loading Home.js: ", loading);
+  // console.log("Loading Home.js: ", loading);
 
   const getData = async () => {
     try {

@@ -4,13 +4,18 @@ import { Form, Input, Button } from "antd";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
+import { useDispatch } from "react-redux";
+import { showLoading, hideLoading } from "../redux/alertsSlice";
+
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onFinish = async (values) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/user/login", values);
-
+      dispatch(showLoading());
+      const response = await axios.post("http://localhost:5000/api/user/login", values);      
+      dispatch(hideLoading());
       // console.log("response Login.js: ", response.data)
 
       if(response.data.success){

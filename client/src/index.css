@@ -19,10 +19,10 @@ body {
 
 }
 
-code {
-  /* font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace; */
-}
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+} */
 
 /* antd overriding */
 input {
@@ -47,6 +47,24 @@ label {
 }
 
 /* common */
+
+.spinner-parent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  z-index: 100;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.637);
+}
+.spinner-border{
+  height: 5rem;
+  width: 5rem;
+  color: white !important;
+}
+
 .card {
   box-shadow: 1px 0 2px grey, inset 0 1px 5px rgb(235, 234, 234);
   outline: none;
