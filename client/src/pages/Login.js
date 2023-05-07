@@ -3,7 +3,6 @@ import {Link, useNavigate} from 'react-router-dom'
 import { Form, Input, Button } from "antd";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-// import { response } from "express";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,7 +11,7 @@ function Login() {
     try {
       const response = await axios.post("http://localhost:5000/api/user/login", values);
 
-      console.log("response Login.js: ", response.data)
+      // console.log("response Login.js: ", response.data)
 
       if(response.data.success){
         toast.success(response.data.success);
