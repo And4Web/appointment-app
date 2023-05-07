@@ -23,7 +23,7 @@ function Login() {
 
         const token = localStorage.setItem("token", response.data.token);
 
-        toast("Being redirected to home page.");
+        toast("Redirected to home page.");
         navigate("/");
         
       }else{
