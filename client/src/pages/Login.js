@@ -1,11 +1,35 @@
 import React from "react";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import { Form, Input, Button } from "antd";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+// import { response } from "express";
 
 function Login() {
+  const navigate = useNavigate();
 
-  const onFinish = values => {
+  const onFinish = async (values) => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/user/login", values);
+
+      console.log("response Login.js: ", response.data)
+
+      if(response.data.success){
+        toast.success(response.data.success);
+
+        const token = localStorage.setItem("token", response.data.token);
+
+        toast("Being redirected to home page.");
+        navigate("/");
+        
+      }else{
+        toast.error(response.data.message)
+      }
+    } catch (error) {
+      toast.error("Error Logging you in")
+    }
     // console.log("input from the form: ", values)
+    // console.log("response from the server: ", response.data)
   }
 
   return (
