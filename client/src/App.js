@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from "./components/PublicRoute";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 
@@ -25,8 +26,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route exact path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-        <Route exact path="/login" element={<Login />} />
-        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+        <Route exact path="/register" element={<PublicRoute><Register /></PublicRoute>} />
       </Routes>
       <Footer />
     </div>
