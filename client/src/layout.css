@@ -1,6 +1,7 @@
 .main{
   padding: 1.2rem;
   /* background-color: red; */
+  
 }
 
 .sidebar{
@@ -10,7 +11,7 @@
   margin-right: 1.2rem;
   height: 100vh;
   padding: .8rem;
-  width: 25%;
+  min-width: 20%;
 } 
 .content{
   width: 100%;
@@ -29,4 +30,52 @@
   box-shadow: 0 0 3px grey;
   border-radius: 5px;
   height: 84vh;
+}
+
+
+.sidebar-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-header h1{
+  font-size: 4rem;
+}
+
+.sidebar-menu{
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+
+.menu-item{
+  margin-top: 1.5rem;
+  padding: .2rem;
+}
+
+.menu-item a{
+  color: rgba(255, 255, 255, 0.751);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.menu-item i{
+  color: rgba(255, 255, 255, 0.751);
+  margin: .1rem .5rem;
+}
+
+.active-menu-item{
+  background-color: rgb(78, 78, 209);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+
+
+@media screen and (max-width: 900px) {
+  .sidebar{
+    min-width: auto
+  }
 }

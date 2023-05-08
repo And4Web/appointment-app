@@ -4,8 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+// import Navbar from "./components/Navbar";
+// import Footer from "./components/Footer";
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from "./components/PublicRoute";
 import { Toaster } from "react-hot-toast";
@@ -23,13 +23,13 @@ function App() {
         </div>
       )}
       <Toaster position="top-center" reverseOrder={false} />
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route exact path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route exact path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route exact path="/register" element={<PublicRoute><Register /></PublicRoute>} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
