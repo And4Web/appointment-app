@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import axios from "axios";
 
+import Layout from "../components/Layout";
+
 import {useSelector, useDispatch} from 'react-redux';
 
 function Home() {
@@ -25,9 +27,9 @@ function Home() {
   }, [])
 
   return (
-    <div className="home">
+    <Layout>
       <h1 className="home-title">Home</h1>
-    </div>
+    </Layout>    
   );
 }
 
