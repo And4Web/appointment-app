@@ -41,10 +41,10 @@ function Layout({children}) {
               <h1>AH</h1>
             </div>
             <div className="sidebar-menu">
-              {userMenu.map(menu=>{
+              {userMenu.map((menu, index)=>{
                 const isActive = location.pathname === menu.path;
                 return(
-                  <div className={`d-flex menu-item ${isActive && "active-menu-item"}`}>
+                  <div className={`d-flex menu-item ${isActive && "active-menu-item"}`} key={index}>
                     <i className={menu.icon}></i>
                     <Link to={menu.path}>{menu.name}</Link>
                   </div>

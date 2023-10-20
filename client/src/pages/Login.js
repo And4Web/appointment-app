@@ -20,16 +20,15 @@ function Login() {
 
       if(response.data.success){
         toast.success(response.data.success);
-
         const token = localStorage.setItem("token", response.data.token);
-
-        toast("Redirected to home page.");
-        navigate("/");
-        
+        toast("Redirecting to home page.");
+        navigate("/");        
       }else{
+        dispatch(hideLoading());
         toast.error(response.data.message)
       }
     } catch (error) {
+      dispatch(hideLoading());
       toast.error("Error Logging you in")
     }
     // console.log("input from the form: ", values)
@@ -39,7 +38,7 @@ function Login() {
   return (
     <div className="authentication">
       <div className="authentication-form card p-3">
-        <h1 className=" card-title ">Welcome, Login here</h1>
+        <h1 className=" card-title ">Welcome back</h1>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item label="Email" name="email">
             <Input type="email" placeholder="Enter your email" />

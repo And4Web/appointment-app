@@ -13,12 +13,11 @@ function Register() {
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const response = await axios.post("http://localhost:5000/api/user/register", values);
-      
+      const response = await axios.post("http://localhost:5000/api/user/register", values);      
       dispatch(hideLoading());
 
       if (response.data.success) {
-        // console.log("Register.js data success: ", response.data)
+        console.log("Register.js data success: ", response.data)
         toast.success(response.data.message);
         toast("Being redirected to Login page.");
         navigate('/login');
@@ -27,6 +26,7 @@ function Register() {
         toast.success(response.data.message);
       }
     } catch (error) {
+      dispatch(hideLoading());
       // console.log("Register.js error: ", error)
       toast.error("Something went wrong.")
     }
@@ -37,7 +37,7 @@ function Register() {
   return (
     <div className="authentication">
       <div className="authentication-form card p-3">
-        <h1 className=" card-title ">Welcome, Register here</h1>
+        <h1 className=" card-title ">Create new account</h1>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item label="Name" name="name">
             <Input type="text" placeholder="Enter your name" />

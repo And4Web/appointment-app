@@ -13,12 +13,13 @@ import { useSelector } from "react-redux";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
+  // console.log("loading from App.js: ", loading)
 
   return (
     <div>
       {loading && (
         <div className="spinner-parent">
-          <div class="spinner-border" role="status">            
+          <div className="spinner-border" role="status">            
           </div>
         </div>
       )}
