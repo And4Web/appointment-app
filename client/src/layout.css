@@ -123,6 +123,9 @@
   }
 }
 @media screen and (max-width: 780px) {
+  .main{
+    padding: .8rem;
+  }
   .sidebar{
     min-width: 25%;
   }
@@ -142,14 +145,29 @@
 
 }
 @media screen and (max-width: 650px) {
-  .sidebar{
+  .main{
+    padding: .6rem;
+  }
+  /* .sidebar{
     display: none
+  } */
+  .menu-item{
+    align-self: center;
+    margin-top: 1rem;
+    padding: .2rem;
+    min-width: 20%;
+  }
+  .menu-item i{
+    color: rgba(255, 255, 255, 0.751);
+    margin: .1rem .5rem;
+    font-size: 1.5rem ;
+    cursor: pointer;
   }
   .menu-item a{
-    font-size: .8rem;
+    display: none;
   }
   .collapsed-sidebar{
-    min-width: 20%;
+    display: none
   }
   .sidebar-header h1{
     font-size: 3.2rem;
@@ -158,6 +176,9 @@
   
 }
 @media screen and (max-width: 520px) {
+  .main{
+    padding: .4rem;
+  }
   .collapsed-sidebar{
     min-width: 20%;
   }
