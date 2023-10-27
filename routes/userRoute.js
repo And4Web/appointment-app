@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
 
 //Protected route:
 router.post("/get-user-info-by-id", authMiddleware, async (req, res)=>{
-  try {
+  try {    
     const user = await User.findOne({_id: req.body.userId});
     if(!user){
       return res.status(200).json({message: "User not found", success: false})

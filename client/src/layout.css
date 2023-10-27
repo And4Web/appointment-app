@@ -144,6 +144,16 @@
   } */
 
 }
+.header-right{
+  display: flex ;
+  align-items: center ;
+  justify-content: center ;
+}
+.header-user{
+  color: black;
+  text-decoration: underline;
+  font-size: 1rem;
+}
 @media screen and (max-width: 650px) {
   .main{
     padding: .6rem;

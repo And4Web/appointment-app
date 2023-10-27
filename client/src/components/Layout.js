@@ -1,10 +1,13 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import '../layout.css'
 import { Link, useLocation } from 'react-router-dom'
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function Layout({children}) {
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const user = useSelector(state=>state.user.user);
 
   const userMenu = [
     {
@@ -33,6 +36,7 @@ function Layout({children}) {
       icon: "ri-logout-circle-line"
     },
   ]
+  
   return (    
       <div className="main">
         <div className="d-flex layout">
@@ -55,7 +59,9 @@ function Layout({children}) {
           <div className="content">
             <div className="header">
               {collapsed? (<i className="ri-menu-2-line header-action-icon" onClick={()=>setCollapsed(false)}></i>) : (<i className="ri-close-line header-action-icon" onClick={()=>setCollapsed(true)}></i>)}   
-            
+              <div className="d-flex align-items-center px-3 header-right"><i className="ri-notification-line header-action-icon px-3" ></i>
+              <Link to="/profile" className='header-user'>{user}</Link>
+              </div>        
             </div>
             <div className="content-body">{children}</div>
           </div>
