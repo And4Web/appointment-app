@@ -1,24 +1,31 @@
 import React,{useEffect, useState} from 'react'
 import '../layout.css'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 function Layout({children}) {
   const userState = useSelector(state=>state.user.user);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState("");
+  
+  const [isAdmin, setIsAdmin] = useState(false);
   
   let userFirstName = user.split(" ")[0];
 
   useEffect(()=>{
     if(userState){
-      setUser(userState);
+      setUser(userState.name);
+      setIsAdmin(userState.isAdmin)
     }
-  },[userState])
-  
+
+  },[userState])  
+
+
+  // console.log(userState, isAdmin)
 
   const userMenu = [
     {
@@ -41,22 +48,44 @@ function Layout({children}) {
       path: "/profile",
       icon: "ri-shield-user-line"
     },
-    {
-      name: "Logout",
-      path: "/logout",
-      icon: "ri-logout-circle-line"
-    },
+   
   ]
+  const adminMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "ri-home-line"
+    },
+    {
+      name: "Users",
+      path: "/users",
+      icon: "ri-list-check"
+    },
+    {
+      name: "Doctors",
+      path: "/doctors",
+      icon: "ri-hospital-line"
+    },
+    {
+      name: "Profile",
+      path: "/profile",
+      icon: "ri-shield-user-line"
+    },
+    
+  ]
+
+  const menuToBe = isAdmin ? adminMenu : userMenu;
+  console.log(menuToBe)
   
   return (    
       <div className="main">
         <div className="d-flex layout">
           <div className={collapsed ? "collapsed-sidebar":"sidebar"}>
             <div className="sidebar-header">
-              <h1>AH</h1>
+              <h1 className='site-logo'>AH</h1>
             </div>
             <div className="sidebar-menu">
-              {userMenu.map((menu, index)=>{
+              {menuToBe.map((menu, index)=>{
                 const isActive = location.pathname === menu.path;
                 return(
                   <div className={`d-flex ${!collapsed? "menu-item" : "collapsed-menu-item"} ${isActive && "active-menu-item"}`} key={index}>
@@ -65,6 +94,10 @@ function Layout({children}) {
                   </div>
                 )
               })}
+              <div className={`d-flex ${!collapsed? "menu-item" : "collapsed-menu-item"} "active-menu-item"`} onClick={()=>{localStorage.clear(); navigate("/login")}}>
+                    <i className="ri-logout-circle-line" ></i>
+                    {!collapsed ? (<Link to="/logout">Logout</Link>) : null}                    
+                  </div>
             </div>
           </div>
           <div className="content">

@@ -13,6 +13,11 @@
   padding: .8rem;
   min-width: 20%;
 } 
+.site-logo{
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgb(40, 37, 37), -1px -1px 5px rgb(243, 243, 244);
+}
 
 .collapsed-sidebar{
   background-color: rgb(122, 122, 247);

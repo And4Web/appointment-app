@@ -56,13 +56,14 @@ router.post("/login", async (req, res) => {
 router.post("/get-user-info-by-id", authMiddleware, async (req, res)=>{
   try {    
     const user = await User.findOne({_id: req.body.userId});
+    user.password = undefined;
+    user.__v = undefined;
+    user.updatedAt = undefined;
+   
     if(!user){
       return res.status(200).json({message: "User not found", success: false})
     }else{
-      return res.status(200).json({success: true, loggedinUser: {
-        name: user.name,
-        email: user.email
-      }})
+      return res.status(200).json({success: true, loggedinUser: user})
     }
 
   } catch (error) {

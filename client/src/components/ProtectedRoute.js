@@ -9,6 +9,7 @@ function ProtectedRoute(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state=>state.user)
+  console.log("protectedRoute: ", user)
 
   const getUser = async () => {
     try {
@@ -18,7 +19,7 @@ function ProtectedRoute(props) {
       }})
       dispatch(hideLoading())
       if(response.data.success){   
-        dispatch(setUser(response.data.loggedinUser.name))
+        dispatch(setUser(response.data.loggedinUser))
       }else{
         localStorage.clear();
         navigate("/login")
