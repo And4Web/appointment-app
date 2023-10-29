@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import axios from "axios";
@@ -9,6 +9,12 @@ import { hideLoading, showLoading } from "../redux/alertsSlice";
 function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const showPasswordHandler = () => {
+    setShowPassword(!showPassword)
+  }
 
   const onFinish = async (values) => {
     try {
@@ -46,8 +52,18 @@ function Register() {
             <Input type="email" placeholder="Enter your email" />
           </Form.Item>
           <Form.Item label="Password" name="password">
-            <Input type="password" placeholder="Enter your password" />
+            <Input type={`${showPassword ? "text" : "password"}`} placeholder="Enter your password" />
           </Form.Item>
+
+          <div className="password-input" onClick={showPasswordHandler}>
+            {!showPassword ? (
+              <i className="ri-eye-line" ></i>
+            ) : (
+              <i className="ri-eye-off-line" ></i>
+            )}
+            <p>{!showPassword ? "Show Password" : "Hide Password"}</p>
+          </div>
+
           <Button type="primary" htmlType="submit">
             REGISTER
           </Button>

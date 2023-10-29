@@ -5,9 +5,20 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 function Layout({children}) {
+  const userState = useSelector(state=>state.user.user);
   const location = useLocation();
+
   const [collapsed, setCollapsed] = useState(false);
-  const user = useSelector(state=>state.user.user);
+  const [user, setUser] = useState("");
+  
+  let userFirstName = user.split(" ")[0];
+
+  useEffect(()=>{
+    if(userState){
+      setUser(userState);
+    }
+  },[userState])
+  
 
   const userMenu = [
     {
@@ -60,7 +71,7 @@ function Layout({children}) {
             <div className="header">
               {collapsed? (<i className="ri-menu-2-line header-action-icon" onClick={()=>setCollapsed(false)}></i>) : (<i className="ri-close-line header-action-icon" onClick={()=>setCollapsed(true)}></i>)}   
               <div className="d-flex align-items-center px-3 header-right"><i className="ri-notification-line header-action-icon px-3" ></i>
-              <Link to="/profile" className='header-user'>{user}</Link>
+              <Link to="/profile" className='header-user'>{userFirstName}</Link>
               </div>        
             </div>
             <div className="content-body">{children}</div>

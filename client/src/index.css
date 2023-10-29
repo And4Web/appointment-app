@@ -110,6 +110,19 @@ label {
   box-shadow: 0 2px 2px grey, inset -2px 2px 5px rgb(231, 230, 230);
 }
 
+.password-input{
+  /* border: 1px solid black; */
+  display: flex;
+  /* align-items: center ; */
+  /* justify-content: center ; */
+  cursor: pointer;
+
+}
+.password-input p{
+  margin-left: .6rem;
+  text-decoration: underline;
+}
+
 /* home page */
 .home {
   height: 100vh;
