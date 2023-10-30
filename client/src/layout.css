@@ -141,7 +141,7 @@
 
 @media screen and (max-width: 900px) {
   .sidebar{
-    min-width: auto;
+    min-width: 25%;
   }
   .collapsed-sidebar{
     min-width: 15%
@@ -150,9 +150,6 @@
 @media screen and (max-width: 780px) {
   .main{
     padding: .8rem;
-  }
-  .sidebar{
-    min-width: 25%;
   }
   .menu-item a{
     font-size: .8rem;

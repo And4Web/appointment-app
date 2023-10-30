@@ -19,7 +19,7 @@ const DoctorSchema = new mongoose.Schema(
       required: true,
     },
     website: {
-      type: string,
+      type: String,
     },
     address: {
       type: String,
@@ -40,6 +40,10 @@ const DoctorSchema = new mongoose.Schema(
     timings: {
       type: Array,
       required: true
+    },
+    status: {
+      type: String,
+      default: "pending"
     }
   },
   {

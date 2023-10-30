@@ -5,6 +5,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../middlewares/authMiddleware");
 
+const Doctor = require('../models/doctorModel');
+
 router.get("/test", (req, res) => {
   return res.send("This is the user test route.");
 });
@@ -52,7 +54,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//Protected route:
+//Protected route- get user info:
 router.post("/get-user-info-by-id", authMiddleware, async (req, res)=>{
   try {    
     const user = await User.findOne({_id: req.body.userId});
@@ -71,4 +73,37 @@ router.post("/get-user-info-by-id", authMiddleware, async (req, res)=>{
   }
 })
 
+// when a user applies for a doctor's account:
+router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
+  try {
+    const newDoctor = await new Doctor(...req.body, {status: "pending"})
+    await newDoctor.save();
+    const admin = await User.findOne({isAdmin: true});
+    const unseenNotifications = {
+      type: "new-doctor-application",
+      message: `${newDoctor.firstName} ${newDoctor.lastName} has applied for a doctor's account.`,
+      data: {
+        doctorId: newDoctor._id,
+        name: newDoctor.firstName + " " + newDoctor.lastName,
+      },
+      onClickPath: "/admin/doctors"
+    };
+    admin.unseenNotifications.push(unseenNotifications);
+
+    await User.findByIdAndUpdate(admin._id, {unseenNotifications});
+
+    return res.status(200).json({
+      success: true,
+      message: "Applied for doctor's account successfully."
+    })
+
+  } catch (error) {
+    console.log("Errors >>> ", error)
+    return res
+      .status(500)
+      .json({ message: "Error applying for a doctor's account.", success: false, error: error.message });
+  }
+})
+
 module.exports = router;
+// start at 15:00
