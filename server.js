@@ -19,7 +19,7 @@ app.use(express.json());
 
 // endpoints
 app.get("/", (req, res) => {
-  res.send("Hello! You are at the root...");
+  res.send("Hello! This Server is serving you with some sensitive information, Please pay utmost attention while using it...");
 });
 app.get("/api/users", async (req, res)=>{
   res.json({allUsers: await User.find({}, {_id: 0, password: 0, updatedAt: 0, __v: 0 })})

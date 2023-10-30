@@ -3,6 +3,9 @@
   /* background-color: red; */
   
 }
+.layout{
+  /* background-color: green; */
+}
 
 .sidebar{
   background-color: rgb(122, 122, 247);
@@ -12,7 +15,15 @@
   height: 100vh;
   padding: .8rem;
   min-width: 20%;
+  overflow-y: scroll;
 } 
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.sidebar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 .site-logo{
   color: white;
   font-weight: bold;
@@ -46,9 +57,18 @@
 }
 
 .content-body{  
+  padding: .1rem 1rem;
   box-shadow: 0 0 3px grey;
   border-radius: 5px;
   height: 84vh;
+  overflow-y: scroll;
+}
+.content-body::-webkit-scrollbar {
+  display: none;
+}
+.content-body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 

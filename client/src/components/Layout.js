@@ -46,7 +46,7 @@ function Layout({children}) {
     {
       name: "Profile",
       path: "/profile",
-      icon: "ri-shield-user-line"
+      icon: "ri-profile-line"
     },
    
   ]
@@ -59,23 +59,22 @@ function Layout({children}) {
     {
       name: "Users",
       path: "/users",
-      icon: "ri-list-check"
+      icon: "ri-team-line"
     },
     {
       name: "Doctors",
       path: "/doctors",
-      icon: "ri-hospital-line"
+      icon: "ri-user-heart-fill"
     },
     {
       name: "Profile",
       path: "/profile",
-      icon: "ri-shield-user-line"
+      icon: "ri-profile-line"
     },
     
   ]
 
   const menuToBe = isAdmin ? adminMenu : userMenu;
-  console.log(menuToBe)
   
   return (    
       <div className="main">
@@ -88,7 +87,7 @@ function Layout({children}) {
               {menuToBe.map((menu, index)=>{
                 const isActive = location.pathname === menu.path;
                 return(
-                  <div className={`d-flex ${!collapsed? "menu-item" : "collapsed-menu-item"} ${isActive && "active-menu-item"}`} key={index}>
+                  <div className={`d-flex ${!collapsed? "menu-item" : "collapsed-menu-item"} ${isActive && "active-menu-item"}`} key={index} onClick={()=>navigate(`${menu.path}`)}>
                     <i className={menu.icon} ></i>
                     {!collapsed ? (<Link to={menu.path}>{menu.name}</Link>) : null}                    
                   </div>

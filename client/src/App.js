@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ApplyDoctor from "./pages/ApplyDoctor";
 // import Navbar from "./components/Navbar";
 // import Footer from "./components/Footer";
 import ProtectedRoute from './components/ProtectedRoute';
@@ -29,7 +30,9 @@ function App() {
         <Route exact path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
         <Route exact path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route exact path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+        <Route exact path="/apply-doctor" element={<ProtectedRoute><ApplyDoctor /></ProtectedRoute>} />
       </Routes>
+      
       {/* <Footer /> */}
     </div>
   );

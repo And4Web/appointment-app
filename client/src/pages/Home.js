@@ -28,7 +28,7 @@ function Home() {
 
   return (
     <Layout>
-      <h1 className="home-title">Home</h1>
+      <h1 className="page-title">Home</h1>
     </Layout>    
   );
 }
