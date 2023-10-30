@@ -1,15 +1,21 @@
-import { Form, Item, Col, Row, Input, TimePicker, Space } from "antd";
+import { Form, Item, Col, Row, Input, TimePicker, Space, Button } from "antd";
 import Layout from "../components/Layout";
 import React, { useState } from "react";
 
 function ApplyDoctor() {
   const [addTimings, setAddTimings] = useState(false);
+
+
+  const onFinish = (values) => {
+    console.log(values)
+  }
+
   return (
     <Layout>
       <h1 className="page-title">Apply Doctor</h1>
       <hr />
       <h4 className="info-title">Personal Information</h4>
-      <Form layout="vertical">
+      <Form layout="vertical" onFinish={onFinish}>
         <Row gutter={10}>
           <Col span={8} xs={24} sm={24} lg={8}>
             <Form.Item
@@ -76,18 +82,17 @@ function ApplyDoctor() {
           <Col span={8} xs={24} sm={24} lg={8}>
             <Form.Item required label="Timings" name="timings">
             <TimePicker.RangePicker />
-            <TimePicker.RangePicker />
             </Form.Item>
           </Col>
 
           
         </Row>
+        <div className="d-flex justify-content-end my-3 ">
+          <Button className="primary-button" htmlType="submit">Submit</Button>
+        </div>
       </Form>
     </Layout>
   );
 }
 
 export default ApplyDoctor;
-
-
-// start from 26:00

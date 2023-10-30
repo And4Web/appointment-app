@@ -45,7 +45,16 @@ label {
   margin-bottom: 0.5rem !important;
   margin-top: 0.5rem !important;
 }
-
+.primary-button{
+  background-color: #1890ff !important;
+  color: white !important;
+  border: none;
+  outline: none;
+}
+.primary-button:hover{
+  background-color: #0862b7 !important;
+  color: white !important;
+}
 /* common */
 
 .spinner-parent{
