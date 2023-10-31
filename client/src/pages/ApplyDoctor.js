@@ -131,4 +131,3 @@ function ApplyDoctor() {
 }
 
 export default ApplyDoctor;
-{/**/}

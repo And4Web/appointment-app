@@ -76,9 +76,12 @@ router.post("/get-user-info-by-id", authMiddleware, async (req, res)=>{
 // when a user applies for a doctor's account:
 router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
   try {
-    const newDoctor = await new Doctor(...req.body, {status: "pending"})
+    const doctorReq = req.body;
+    const newDoctor = await new Doctor({...doctorReq, status: "pending"})    
     await newDoctor.save();
+
     const admin = await User.findOne({isAdmin: true});
+
     const unseenNotifications = {
       type: "new-doctor-application",
       message: `${newDoctor.firstName} ${newDoctor.lastName} has applied for a doctor's account.`,
@@ -88,6 +91,7 @@ router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
       },
       onClickPath: "/admin/doctors"
     };
+
     admin.unseenNotifications.push(unseenNotifications);
 
     await User.findByIdAndUpdate(admin._id, {unseenNotifications});
