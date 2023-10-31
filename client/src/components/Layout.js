@@ -127,8 +127,8 @@ function Layout({ children }) {
                 onClick={() => setCollapsed(true)}
               ></i>
             )}
-            <div className="d-flex align-items-center px-3 header-right">
-              <div className="notification">
+            <div className="d-flex align-items-center px-3 py-3 header-right">
+              <div className="notification ">
                 <Badge size="default" count={unseenNotifications.length} className="notification-badge" onClick={()=> navigate("/notifications")}>
                   <i className="ri-notification-line header-action-icon px-3 notification-bell"></i>
                 </Badge>

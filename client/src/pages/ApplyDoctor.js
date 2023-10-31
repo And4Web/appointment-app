@@ -11,8 +11,8 @@ import {hideLoading, showLoading} from '../redux/alertsSlice';
 // import {} from '../redux/userSlice';
 
 function ApplyDoctor() {
-  const user = useSelector(state=>state.user.user)
-  console.log("applyDoctor: ", user)
+  // const user = useSelector(state=>state.user.user)
+  // console.log("applyDoctor: ", user)
   const [addTimings, setAddTimings] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();

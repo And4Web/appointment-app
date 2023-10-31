@@ -153,3 +153,14 @@ label {
 .info-title{
   color: rgb(110, 109, 109) !important;
 }
+.notification-text{
+  /* border: 1px solid grey !important; */
+  border-bottom: 2px solid red !important;
+  border-radius: 5px;
+  padding: .5rem;
+  /* margin: 1rem 0; */
+  cursor: pointer;
+}
+.anchor{
+  cursor: pointer !important;
+}
