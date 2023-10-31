@@ -55,6 +55,18 @@
   align-items: center;
   justify-content: space-between;
 }
+.notification{
+  position: relative;
+}
+.notification-badge{
+  position: absolute !important;
+  top: -1rem;
+  left: -3.5rem;
+}
+.notification-bell{
+  margin-right: -1.5rem;
+  
+}
 
 .content-body{  
   padding: .1rem 1rem;
