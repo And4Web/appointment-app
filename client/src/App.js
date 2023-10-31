@@ -11,6 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from "./components/PublicRoute";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import Notifications from "./pages/Notifications";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/login" element={<PublicRoute><Login /></PublicRoute>} />
         <Route exact path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         <Route exact path="/apply-doctor" element={<ProtectedRoute><ApplyDoctor /></ProtectedRoute>} />
+        <Route exact path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
       </Routes>
       
       {/* <Footer /> */}

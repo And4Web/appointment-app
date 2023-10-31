@@ -129,7 +129,7 @@ function Layout({ children }) {
             )}
             <div className="d-flex align-items-center px-3 header-right">
               <div className="notification">
-                <Badge size="default" count={unseenNotifications.length} className="notification-badge">
+                <Badge size="default" count={unseenNotifications.length} className="notification-badge" onClick={()=> navigate("/notifications")}>
                   <i className="ri-notification-line header-action-icon px-3 notification-bell"></i>
                 </Badge>
               </div>
