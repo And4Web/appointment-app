@@ -109,5 +109,54 @@ router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
   }
 })
 
+// mark all notifications as seen:
+router.post("/mark-all-notifications-as-seen", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const user = await User.findById(userId)
+    let unseenNotifications = user.unseenNotifications;
+    let seenNotifications = user.seenNotifications;
+
+    seenNotifications.push(...unseenNotifications);
+    user.unseenNotifications = [];
+
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+
+    // console.log('updated user >>> ', updatedUser);
+
+    return res.status(200).json({success: true, message: "All notifications marked as seen.", data: updatedUser});
+
+  } catch (error) {
+    console.log("Errors >>> ", error)
+    return res
+      .status(500)
+      .json({ message: "Error marking all notifications as seen.", success: false, error: error.message });
+  }
+})
+
+// delete all notifications:
+router.post("/delete-all-notifications", authMiddleware, async(req, res)=>{
+  try {
+    const userId = req.body.userId;
+    const user = await User.findById(userId)
+
+    user.seenNotifications = [];
+    user.unseenNotifications = [];
+
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+
+    // console.log('updated user >>> ', updatedUser);
+
+    return res.status(200).json({success: true, message: "All notifications deleted.", data: updatedUser});
+  } catch (error) {
+    console.log("Errors >>> ", error)
+    return res
+      .status(500)
+      .json({ message: "Error deleting all notifications.", success: false, error: error.message });
+  }
+})
+
 module.exports = router;
 // start at 15:00
