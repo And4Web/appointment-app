@@ -19,7 +19,7 @@ function Register() {
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const response = await axios.post("http://localhost:5000/api/user/register", values);      
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/register`, values);      
       dispatch(hideLoading());
 
       if (response.data.success) {

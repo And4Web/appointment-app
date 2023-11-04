@@ -33,7 +33,7 @@ function Notifications() {
   const markAllAsSeen = async (values) => {
     try {
       dispatch(showLoading)
-      const response = await axios.post("http://localhost:5000/api/user/mark-all-notifications-as-seen", {userId}, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/mark-all-notifications-as-seen`, {userId}, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
@@ -41,7 +41,8 @@ function Notifications() {
       dispatch(hideLoading);
 
       if(response.data.success){
-        toast.success(response.data.message);
+        let toastMessage = unseenNotifications.length !== 0 ? response.data.message : "No Notifications available at this moment."
+        toast.success(toastMessage);
         setUnseenNotifications(response.data.unseenNotifications? []: [])
       }else{
         toast.error(response.data.message);
@@ -50,20 +51,20 @@ function Notifications() {
       dispatch(hideLoading);
       console.log(error.message)
       toast.error("Something went wrong.")
-    }
-    
+    }    
   }
 
 
   const deleteAllNotifications = async (values) => {
     try {
       dispatch(showLoading)
-      const response = await axios.post("http://localhost:5000/api/user/delete-all-notifications", {userId}, {headers: {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/delete-all-notifications`, {userId}, {headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`
     }})
     dispatch(hideLoading)
     if(response.data.success){
-      toast.success(response.data.message)
+      let toastMessage = seenNotifications.length !== 0 ? response.data.message : "No Notifications available at this moment."
+        toast.success(toastMessage);
       setSeenNotifications(response.data.seenNotifications? []: [])
     }else{
       toast.error(response.data.message)
@@ -72,8 +73,7 @@ function Notifications() {
       dispatch(hideLoading)
       console.log(error.message)
       toast.error(error.message)      
-    }
-    
+    }    
   }
 
   return (
@@ -117,4 +117,3 @@ function Notifications() {
 
 export default Notifications
 
-// from 10:00

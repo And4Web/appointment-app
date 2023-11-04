@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../layout.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import { Badge } from "antd";
 
@@ -25,10 +24,6 @@ function Layout({ children }) {
       setUnseeNotifications(userState.unseenNotifications);
     }
   }, [userState]);
-
-  // console.log(userState, isAdmin)
-  // console.log("layout.js, unseenNotifications: ", unseenNotifications)
-  // console.log("layout.js user state: ", userState);
 
   const userMenu = [
     {

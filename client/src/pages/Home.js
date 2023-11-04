@@ -11,7 +11,7 @@ function Home() {
 
   const getData = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/api/user/get-user-info-by-id", {}, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/get-user-info-by-id`, {}, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }

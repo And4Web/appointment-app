@@ -21,7 +21,7 @@ function ApplyDoctor() {
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const response = await axios.post("http://localhost:5000/api/user/apply-doctor-account", values, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/apply-doctor-account`, values, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }

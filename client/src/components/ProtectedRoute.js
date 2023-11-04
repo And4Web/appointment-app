@@ -14,7 +14,7 @@ function ProtectedRoute(props) {
   const getUser = async () => {
     try {
       dispatch(showLoading())
-      const response = await axios.post("http://localhost:5000/api/user/get-user-info-by-id", {token: localStorage.getItem("token")}, {headers: {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/get-user-info-by-id`, {token: localStorage.getItem("token")}, {headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }})
       dispatch(hideLoading())

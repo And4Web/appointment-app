@@ -16,7 +16,7 @@ function Login() {
     try {
       dispatch(showLoading());
       const response = await axios.post(
-        "http://localhost:5000/api/user/login",
+        `${process.env.REACT_APP_BACKEND_API_URL}/user/login`,
         values
       );
       dispatch(hideLoading());
