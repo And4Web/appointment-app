@@ -12,10 +12,11 @@ import PublicRoute from "./components/PublicRoute";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import Notifications from "./pages/Notifications";
+import UsersList from "./pages/Admin/UsersList";
+import DoctorsList from "./pages/Admin/DoctorsList";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
-  // console.log("loading from App.js: ", loading)
 
   return (
     <div>
@@ -33,6 +34,8 @@ function App() {
         <Route exact path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         <Route exact path="/apply-doctor" element={<ProtectedRoute><ApplyDoctor /></ProtectedRoute>} />
         <Route exact path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+        <Route exact path="/users" element={<ProtectedRoute><UsersList /></ProtectedRoute>} />
+        <Route exact path="/doctors" element={<ProtectedRoute><DoctorsList /></ProtectedRoute>} />
       </Routes>
       
       {/* <Footer /> */}

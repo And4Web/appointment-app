@@ -73,42 +73,6 @@ router.post("/get-user-info-by-id", authMiddleware, async (req, res)=>{
   }
 })
 
-// when a user applies for a doctor's account:
-router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
-  try {
-    const doctorReq = req.body;
-    const newDoctor = await new Doctor({...doctorReq, status: "pending"})    
-    await newDoctor.save();
-
-    const admin = await User.findOne({isAdmin: true});
-
-    const unseenNotifications = {
-      type: "new-doctor-application",
-      message: `${newDoctor.firstName} ${newDoctor.lastName} has applied for a doctor's account.`,
-      data: {
-        doctorId: newDoctor._id,
-        name: newDoctor.firstName + " " + newDoctor.lastName,
-      },
-      onClickPath: "/admin/doctors"
-    };
-
-    admin.unseenNotifications.push(unseenNotifications);
-
-    await User.findByIdAndUpdate(admin._id, {unseenNotifications});
-
-    return res.status(200).json({
-      success: true,
-      message: "Applied for doctor's account successfully."
-    })
-
-  } catch (error) {
-    console.log("Errors >>> ", error)
-    return res
-      .status(500)
-      .json({ message: "Error applying for a doctor's account.", success: false, error: error.message });
-  }
-})
-
 // mark all notifications as seen:
 router.post("/mark-all-notifications-as-seen", authMiddleware, async (req, res) => {
   try {
@@ -135,6 +99,7 @@ router.post("/mark-all-notifications-as-seen", authMiddleware, async (req, res) 
   }
 })
 
+
 // delete all notifications:
 router.post("/delete-all-notifications", authMiddleware, async(req, res)=>{
   try {
@@ -158,5 +123,6 @@ router.post("/delete-all-notifications", authMiddleware, async(req, res)=>{
   }
 })
 
+
+
 module.exports = router;
-// start at 15:00
