@@ -43,7 +43,6 @@ router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
   }
 })
 
-
 // get Users List
 router.get('/get-all-users', authMiddleware, async (req, res) => {
   try {
@@ -70,24 +69,29 @@ router.get("/get-all-doctors", authMiddleware, async (req, res) => {
 })
 
 // change doctor's status
-router.post("/change-doctor-status", authMiddleware, async (req, res)=>{
+router.post("/change-doctor-account-status", authMiddleware, async (req, res)=>{
   try {
-    const {doctorId, status, userId} = req.body;
-    const doctor = await Doctor.findByIdAndUpdate(doctorId, {status})
-    return res.status(200).json({
-      message: "Doctor's status updated successfully.",
-      success: true, 
-      data: doctor
-    })
-    const user = await User.findById(userId);
-    const unseenNotifications = user.unseenNotifications;
+    const {doctorId, status} = req.body;
+    let doctor = await Doctor.findByIdAndUpdate(doctorId, {status});
+    let userId = doctor.userId;
+    let user = await User.findById(userId);
+    // console.log(doctorId, status, userId);
+
+    let unseenNotifications = user.unseenNotifications;
     unseenNotifications.push({
       type: "doctor-request-approved",
       message: `Your doctor account has been ${status}.`,
       onClickPath: "/notifications"
     })
-    await User.findByIdAndUpdate(user._id, {unseenNotifications});
-
+    user.isDoctor = true;
+    user = await user.save();
+    
+    return res.status(200).json({
+      message: "Doctor's account approved successfully.",
+      success: true,
+      data: doctor,
+    })
+    
   } catch (error) {
     console.log(error);
     return res.status(500).json({
