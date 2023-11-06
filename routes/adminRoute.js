@@ -3,8 +3,7 @@ const router = express.Router();
 
 const User = require("../models/userModel");
 const Doctor = require('../models/doctorModel');
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+
 const authMiddleware = require("../middlewares/authMiddleware");
 
 
@@ -67,6 +66,34 @@ router.get("/get-all-doctors", authMiddleware, async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({message: "Error fetching list of doctors", success: false, error})
+  }
+})
+
+// change doctor's status
+router.post("/change-doctor-status", authMiddleware, async (req, res)=>{
+  try {
+    const {doctorId, status, userId} = req.body;
+    const doctor = await Doctor.findByIdAndUpdate(doctorId, {status})
+    return res.status(200).json({
+      message: "Doctor's status updated successfully.",
+      success: true, 
+      data: doctor
+    })
+    const user = await User.findById(userId);
+    const unseenNotifications = user.unseenNotifications;
+    unseenNotifications.push({
+      type: "doctor-request-approved",
+      message: `Your doctor account has been ${status}.`,
+      onClickPath: "/notifications"
+    })
+    await User.findByIdAndUpdate(user._id, {unseenNotifications});
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Error changing Doctor's status.",
+      error: error.message
+    })
   }
 })
 

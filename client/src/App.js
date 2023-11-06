@@ -34,8 +34,8 @@ function App() {
         <Route exact path="/register" element={<PublicRoute><Register /></PublicRoute>} />
         <Route exact path="/apply-doctor" element={<ProtectedRoute><ApplyDoctor /></ProtectedRoute>} />
         <Route exact path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
-        <Route exact path="/users" element={<ProtectedRoute><UsersList /></ProtectedRoute>} />
-        <Route exact path="/doctors" element={<ProtectedRoute><DoctorsList /></ProtectedRoute>} />
+        <Route exact path="/admin/userslist" element={<ProtectedRoute><UsersList /></ProtectedRoute>} />
+        <Route exact path="/admin/doctorslist" element={<ProtectedRoute><DoctorsList /></ProtectedRoute>} />
       </Routes>
       
       {/* <Footer /> */}
