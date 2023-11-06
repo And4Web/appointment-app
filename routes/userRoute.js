@@ -58,14 +58,18 @@ router.post("/login", async (req, res) => {
 router.post("/get-user-info-by-id", authMiddleware, async (req, res)=>{
   try {    
     const user = await User.findOne({_id: req.body.userId});
+    const doctor = await Doctor.findOne({userId: user._id});
+  
     user.password = undefined;
     user.__v = undefined;
     user.updatedAt = undefined;
+
+    loggedinUser = {...user._doc, doctorId: user.isDoctor? doctor._id : null}
    
     if(!user){
       return res.status(200).json({message: "User not found", success: false})
     }else{
-      return res.status(200).json({success: true, loggedinUser: user})
+      return res.status(200).json({success: true, loggedinUser})
     }
 
   } catch (error) {

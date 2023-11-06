@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import Notifications from "./pages/Notifications";
 import UsersList from "./pages/Admin/UsersList";
 import DoctorsList from "./pages/Admin/DoctorsList";
+import Profile from "./pages/Doctor/Profile";
 
 function App() {
   const { loading } = useSelector((state) => state.alerts);
@@ -36,6 +37,7 @@ function App() {
         <Route exact path="/notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
         <Route exact path="/admin/userslist" element={<ProtectedRoute><UsersList /></ProtectedRoute>} />
         <Route exact path="/admin/doctorslist" element={<ProtectedRoute><DoctorsList /></ProtectedRoute>} />
+        <Route exact path="/doctor/profile/:doctorId" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       </Routes>
       
       {/* <Footer /> */}

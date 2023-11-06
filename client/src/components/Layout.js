@@ -14,6 +14,8 @@ function Layout({ children }) {
   const [unseenNotifications, setUnseeNotifications] = useState([]);
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isDoctor, setIsDoctor] = useState(false);
+  const [doctorId, setDoctorId] = useState(null);
 
   let userFirstName = user.split(" ")[0];
 
@@ -21,7 +23,9 @@ function Layout({ children }) {
     if (userState) {
       setUser(userState.name);
       setIsAdmin(userState.isAdmin);
+      setIsDoctor(userState.isDoctor);
       setUnseeNotifications(userState.unseenNotifications);
+      setDoctorId(userState.doctorId);
     }
   }, [userState]);
 
@@ -70,7 +74,25 @@ function Layout({ children }) {
     },
   ];
 
-  const menuToBe = isAdmin ? adminMenu : userMenu;
+  const doctorMenu = [
+    {
+      name: "Home",
+      path: "/",
+      icon: "ri-home-line",
+    },
+    {
+      name: "Appointments",
+      path: "/appointments",
+      icon: "ri-list-check",
+    },
+    {
+      name: "Profile",
+      path: `/doctor/profile/${doctorId}`,
+      icon: "ri-profile-line",
+    },
+  ];
+
+  const menuToBe = isAdmin ? adminMenu : isDoctor? doctorMenu : userMenu;
 
   return (
     <div className="main">

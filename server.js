@@ -13,6 +13,7 @@ const User = require('./models/userModel');
 // import Routes
 const userRoute = require("./routes/userRoute");
 const adminRoute = require("./routes/adminRoute");
+const doctorRoute = require("./routes/doctorRoute");
 
 // Middleware
 app.use(cors());
@@ -29,6 +30,7 @@ app.get("/api/users", async (req, res)=>{
 // route endpoints
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/doctor", doctorRoute);
 
 // start server
 app.listen(PORT, () => console.log(`Node Server running at port: ${PORT}.`));
