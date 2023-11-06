@@ -12,21 +12,21 @@ function Profile() {
   const dispatch = useDispatch();
   const {doctorId} = useParams();
 
-  
-
   const getDoctor = async () => {
    try {
     dispatch(showLoading)
     const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/profile/${doctorId}`, {
-      header: {
+      headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     })
 
     dispatch(hideLoading)
     if(response.data.success){
+      toast.success(response.data.message);
       console.log("Profile.js: ", response.data)
     }else{
+      toast.error(response.error)
       console.log("Profile.js: ", response.data)
     }
    } catch (error) {
