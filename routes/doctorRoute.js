@@ -29,4 +29,23 @@ router.get("/profile/:userId", authMiddleware, async (req, res)=>{
   }
 })
 
+
+// update doctor profile
+router.post("/update-doctor-account", authMiddleware, async (req, res) => {
+  try {
+    const values = req.body;
+  let doctor = await Doctor.findOne({userId: req.body.userId});
+  await doctor.updateOne(values)
+  
+  return res.status(200).json({message: "Doctor profile updated successfully.", success: true})
+  } catch (error) {
+    console.log("Error updating doctor account: ", error);
+    return res.status(500).json({
+      message: "Error updating doctor account.",
+      success: false,
+      error
+    })
+  }
+})
+
 module.exports = router;
