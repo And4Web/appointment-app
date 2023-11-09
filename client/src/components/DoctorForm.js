@@ -1,7 +1,7 @@
 import { Button, Col, Form, Input, Row, TimePicker } from 'antd'
 import React from 'react'
 
-function DoctorForm({onFinish, initialValues,buttonValue}) {
+function DoctorForm({onFinish, initialValues, buttonValue}) {
   return (
     <Form layout="vertical" onFinish={onFinish} initialValues={initialValues}>
       <h4 className="info-title">Personal Information</h4>

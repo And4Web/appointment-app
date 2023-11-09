@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import Layout from '../../components/Layout'
-import axios from 'axios'
-import {toast} from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import Layout from '../../components/Layout';
+import axios from 'axios';
+import {toast} from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 import {showLoading, hideLoading} from '../../redux/alertsSlice';
-import { useNavigate, useParams } from 'react-router-dom'
-import DoctorForm from '../../components/DoctorForm'
-import moment from 'moment'
+import {setDoctor} from '../../redux/doctorSlice';
+import {setDoctorTimings} from '../../redux/doctorTimingSlice';
+import { useNavigate, useParams } from 'react-router-dom';
+import DoctorForm from '../../components/DoctorForm';
+import moment from 'moment';
 
 function Profile() {
   const userState = useSelector(state=>state.user.user);
+  const doctorState = useSelector(state=>state.doctor.doctor);  
+  const doctorTimings = useSelector(state=>state.doctorTimings.doctorTimings);  
+  
   const [doctorData, setDoctorData] = useState(null); 
 
   const navigate = useNavigate()
@@ -24,11 +29,11 @@ function Profile() {
         Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     })
-    dispatch(hideLoading)
-    
+    dispatch(hideLoading)    
 
-    if(response.data.success){
-      setDoctorData(response.data.data);  
+    if(response.data.success){ 
+      // setDoctorData(response.data.data)     
+      dispatch(setDoctor(response.data.data));    
       toast.success(response.data.message);    
     }else{
       toast.error(response.error)
@@ -74,12 +79,22 @@ function Profile() {
   }
 
   useEffect(()=>{
-    if(!doctorData){
-      getDoctor()
+    if(!doctorData ){
+      getDoctor();       
     }    
-  },[doctorData])
+    if(doctorState){
+      setDoctorData(doctorState);
+    }
+    if(doctorState && doctorTimings.length === 0){
+      dispatch(setDoctorTimings([moment(doctorState.timings[0]).format("HH:mm"), moment(doctorState.timings[1]).format("HH:mm")]));
+    }
+    
+  },[doctorData, doctorState ])
+  
 
- 
+  // console.log("Profile.js, doctorState: ", timings[0]);
+  
+  // console.log(moment(sample).format("HH:mm"))
 
   return (
     <Layout>
