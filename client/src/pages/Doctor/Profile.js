@@ -49,12 +49,12 @@ function Profile() {
 
   const onFinish = async (values) => {
     try {
-      const request = {...values, timings: [
-        moment(values.timings[0].format("HH:mm")), moment(values.timings[1].format("HH:mm"))
-      ]}
-      console.log("Profile.js request: ", values);
+      const request = {...values, doctorTimings}
+
+      // console.log("Profile.js request: ", values);
+
       dispatch(showLoading());
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/update-doctor-account`, values, {
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/update-doctor-account`, request, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }
@@ -62,7 +62,8 @@ function Profile() {
       dispatch(hideLoading());
 
       if (response.data.success) {
-        console.log("update-doctor data success: ", response.data)
+        // console.log("update-doctor data success: ", response.data);
+        dispatch(setDoctor(values));
         toast.success(response.data.message);
         toast("Being redirected to Home page.");
         navigate('/');
