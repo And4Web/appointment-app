@@ -34,6 +34,7 @@ router.get("/profile/:userId", authMiddleware, async (req, res)=>{
 router.post("/update-doctor-account", authMiddleware, async (req, res) => {
   try {
     const values = req.body;
+    console.log("values from request: ", values);
   let doctor = await Doctor.findOne({userId: req.body.userId});
   await doctor.updateOne(values)
   

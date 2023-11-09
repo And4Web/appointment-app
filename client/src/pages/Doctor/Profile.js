@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {showLoading, hideLoading} from '../../redux/alertsSlice';
 import { useNavigate, useParams } from 'react-router-dom'
 import DoctorForm from '../../components/DoctorForm'
+import moment from 'moment'
 
 function Profile() {
   const userState = useSelector(state=>state.user.user);
@@ -43,6 +44,10 @@ function Profile() {
 
   const onFinish = async (values) => {
     try {
+      const request = {...values, timings: [
+        moment(values.timings[0].format("HH:mm")), moment(values.timings[1].format("HH:mm"))
+      ]}
+      console.log("Profile.js request: ", values);
       dispatch(showLoading());
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/update-doctor-account`, values, {
         headers: {
