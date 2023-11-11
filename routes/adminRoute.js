@@ -7,11 +7,13 @@ const Doctor = require('../models/doctorModel');
 const authMiddleware = require("../middlewares/authMiddleware");
 
 
-// when a user applies for a doctor's account:
+// user applies for a doctor's account:
 router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
   try {
     const doctorReq = req.body;
+    // console.log("request: ", doctorReq);
     const newDoctor = await new Doctor({...doctorReq, status: "pending"})    
+    
     await newDoctor.save();
 
     const admin = await User.findOne({isAdmin: true});
@@ -23,7 +25,7 @@ router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
         doctorId: newDoctor._id,
         name: newDoctor.firstName + " " + newDoctor.lastName,
       },
-      onClickPath: "/admin/doctors"
+      onClickPath: "/admin/doctorslist"
     };
 
     admin.unseenNotifications.push(unseenNotifications);

@@ -9,12 +9,14 @@ import {toast} from 'react-hot-toast';
 
 import {hideLoading, showLoading} from '../redux/alertsSlice';
 import DoctorForm from "../components/DoctorForm";
+import moment from "moment";
 // import {} from '../redux/userSlice';
 
 function ApplyDoctor() {
   // const user = useSelector(state=>state.user.user)
   // console.log("applyDoctor: ", user)
-  const [addTimings, setAddTimings] = useState(false);
+  const doctorTimings = useSelector(state=>state.doctorTimings.doctorTimings); 
+  // const [addTimings, setAddTimings] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,7 +24,14 @@ function ApplyDoctor() {
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/admin/apply-doctor-account`, {...values,}, {
+      let request = {
+        ...values, timings: [
+          moment(values.timings[0]).format("HH:mm"),
+          moment(values.timings[1]).format("HH:mm")
+        ]
+      }
+      console.log("ApplyDoctor.js request: ", request);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/admin/apply-doctor-account`, request, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`
         }

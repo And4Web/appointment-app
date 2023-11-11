@@ -1,9 +1,16 @@
 import { Button, Col, Form, Input, Row, TimePicker } from 'antd'
+import moment from 'moment'
 import React from 'react'
+
 
 function DoctorForm({onFinish, initialValues, buttonValue}) {
   return (
-    <Form layout="vertical" onFinish={onFinish} initialValues={initialValues}>
+    <Form layout="vertical" onFinish={onFinish} initialValues={{...initialValues,  ...(initialValues && {
+      timings: [
+        moment(initialValues.timings[0], "HH:mm"),
+        moment(initialValues.timings[1], "HH:mm")
+      ]
+    })}}>
       <h4 className="info-title">Personal Information</h4>
     <Row gutter={10}>
       <Col span={8} xs={24} sm={24} lg={8}>
@@ -68,11 +75,11 @@ function DoctorForm({onFinish, initialValues, buttonValue}) {
           <Input placeholder="Fee per consultation" type="number"/>
         </Form.Item>
       </Col>
-      {/* <Col span={8} xs={24} sm={24} lg={8}>
+      <Col span={8} xs={24} sm={24} lg={8}>
         <Form.Item required label="Timings" name="timings">
-        <TimePicker.RangePicker />
+        <TimePicker.RangePicker format="HH:mm"/>
         </Form.Item>
-      </Col> */}
+      </Col>
 
       
     </Row>

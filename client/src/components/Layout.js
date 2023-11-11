@@ -93,6 +93,11 @@ function Layout({ children }) {
   ];
 
   const menuToBe = isAdmin ? adminMenu : isDoctor? doctorMenu : userMenu;
+  const role = isAdmin ? "Admin" : isDoctor? "Doctor" : "User";
+
+  const roleLogo = () => {
+    return isAdmin? (<i className="ri-admin-line role-logo"></i>): isDoctor? (<i className="ri-hospital-line role-logo"></i>): (<i className="ri-user-line role-logo"></i>)
+  }
 
   return (
     <div className="main">
@@ -100,6 +105,8 @@ function Layout({ children }) {
         <div className={collapsed ? "collapsed-sidebar" : "sidebar"}>
           <div className="sidebar-header">
             <h1 className="site-logo">AH</h1>
+            {roleLogo()}
+            <h4 className="role">{role}</h4>          
           </div>
           <div className="sidebar-menu">
             {menuToBe.map((menu, index) => {

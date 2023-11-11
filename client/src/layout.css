@@ -24,10 +24,21 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+.sidebar-header{
+  display: flex;
+  flex-direction: column;
+}
 .site-logo{
   color: white;
   font-weight: bold;
   text-shadow: 1px 1px 5px rgb(40, 37, 37), -1px -1px 5px rgb(243, 243, 244);
+}
+.role{
+  color: white; 
+}
+.role-logo{
+  color: white;
+  font-size: 1.8rem;
 }
 
 .collapsed-sidebar{

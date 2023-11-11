@@ -93,10 +93,6 @@ function Profile() {
   },[doctorData, doctorState ])
   
 
-  // console.log("Profile.js, doctorState: ", timings[0]);
-  
-  // console.log(moment(sample).format("HH:mm"))
-
   return (
     <Layout>
       <h1 className='page-title'>Doctor Profile</h1>
