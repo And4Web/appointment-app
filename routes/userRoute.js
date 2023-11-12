@@ -127,6 +127,30 @@ router.post("/delete-all-notifications", authMiddleware, async(req, res)=>{
   }
 })
 
+// get all approved doctors list:
+router.get("/get-approved-doctors", authMiddleware, async (req, res)=>{
+  try {
+    const doctors = await Doctor.find({"status": "approved"});
 
+  if(!doctors){
+    return res.status(404).json({
+      message: "no approved doctors found in database",
+      success: true,      
+    })
+  }
+  return res.status(200).json({
+    message: "list of all approved doctors.",
+    success: true,
+    doctors
+  })
+  } catch (error) {
+    console.log("error get-approved-doctors endpoint: ", error);
+    return res.status(500).json({
+      message: "error get-approved-doctors endpoint",
+      success: false,
+      error
+    })
+  }
+})
 
 module.exports = router;
