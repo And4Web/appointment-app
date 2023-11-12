@@ -1,9 +1,18 @@
 import React from 'react'
+import { useNavigate } from "react-router-dom";
 
-function DoctorCard() {
+function DoctorCard({doctor}) {
+  const navigate = useNavigate();
   return (
-    <div>
-      <h1>Doctor card</h1>
+    <div className='card p-2 mb-2 cursor-pointer' onClick={()=>navigate(`/book-appointment/${doctor._id}`)}>
+      <h1 className='card-title'>Dr. {doctor.firstName} {doctor.lastName}</h1>
+      <hr/>
+      <p><b>Specialization:</b> {doctor.specialization}</p>
+      <p><b>Experience:</b> {doctor.experience} Years</p>
+      <p><b>Phone Number:</b> {doctor.phoneNumber}</p>
+      <p><b>Address:</b> {doctor.address}</p>
+      <p><b>Fee per visit:</b> &#8377;{doctor.feePerConsultation}</p>
+      <p><b>Timings:</b> {doctor.timings[0]}-{doctor.timings[1]}</p>
     </div>
   )
 }
