@@ -6,10 +6,10 @@ const Doctor = require("../models/doctorModel");
 const User = require("../models/userModel");
 // authMiddleware,
 
-// get doctor profile by userId:
-router.get("/profile/:userId", authMiddleware, async (req, res) => {
+// get doctor profile by doctorId:
+router.get("/profile/:doctorId", authMiddleware, async (req, res) => {
   try {
-    const doctorId = req.params.userId;
+    const doctorId = req.params.doctorId;
     const doctor = await Doctor.findById(doctorId);
     if (doctor) {
       return res.status(200).json({
@@ -75,5 +75,7 @@ router.get("/all", async (req, res) => {
     });
   }
 });
+
+// get doctor info 
 
 module.exports = router;

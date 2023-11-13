@@ -47,7 +47,7 @@ function Home() {
 
   return (
     <Layout>
-      <h1 className="page-title">Available Doctors:</h1>
+      <h1 className="page-title">Available Doctors</h1>
       <hr/>
       <Row gutter={20} className="mt-3">
         {doctorsList.map((doctor) => (
