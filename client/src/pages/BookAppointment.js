@@ -1,109 +1,129 @@
-import React, { useState, useEffect } from 'react'
-import Layout from '../components/Layout'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-import {setDoctorTimings} from '../redux/doctorTimingSlice'
-import {showLoading, hideLoading} from '../redux/alertsSlice'
-import {setDoctor} from '../redux/doctorSlice';
-import {toast} from 'react-hot-toast'
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import Layout from "../components/Layout";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import { setDoctorTimings } from "../redux/doctorTimingSlice";
+import { showLoading, hideLoading } from "../redux/alertsSlice";
+import { setDoctor } from "../redux/doctorSlice";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { Button, Col, DatePicker, Row, TimePicker } from "antd";
 
 function BookAppointment() {
-  const userState = useSelector(state=>state.user.user);
-  const doctorState = useSelector(state=>state.doctor.doctor);  
-  const doctorTimings = useSelector(state=>state.doctorTimings.doctorTimings);  
-  
-  const [doctorData, setDoctorData] = useState(null); 
+  const userState = useSelector((state) => state.user.user);
 
-  const navigate = useNavigate()
+  const [doctorData, setDoctorData] = useState(null);
+  const [isAvailable, setIsAvailable] = useState(false);
+  const [date, setDate] = useState();
+  const [selectedTimings, setSelectedTimings] = useState();
+
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {doctorId} = useParams();
+  const { doctorId } = useParams();
 
   const getDoctor = async () => {
-   try {
-    dispatch(showLoading)
-    const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/profile/${doctorId}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-      }
-    })
-    dispatch(hideLoading)    
+    try {
+      dispatch(showLoading);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API_URL}/doctor/profile/${doctorId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(hideLoading);
 
-    if(response.data.success){   
-      const {firstName,lastName, phoneNumber, specialization, feePerConsultation, doctorId: _id, timings} = response.data.data;   
-      setDoctorData({firstName,lastName, phoneNumber, specialization, feePerConsultation, doctorId, timings}) 
-      // dispatch(setDoctor(response.data.data))  
-      // console.log(firstName,lastName, timings)            
-    }else{
-      toast.error(response.error)
-      console.log("Profile.js doctorData error: ", response.error)
+      if (response.data.success) {
+        const {
+          firstName,
+          lastName,
+          phoneNumber,
+          specialization,
+          feePerConsultation,
+          doctorId: _id,
+          timings,
+        } = response.data.data;
+        setDoctorData({
+          firstName,
+          lastName,
+          phoneNumber,
+          specialization,
+          feePerConsultation,
+          doctorId,
+          timings,
+        });
+      } else {
+        toast.error(response.error);
+        console.log("Profile.js doctorData error: ", response.error);
+      }
+    } catch (error) {
+      dispatch(hideLoading);
+      toast.error("Error getting the profile of Doctor.");
+      console.log("Error getting the profile of Doctor.");
     }
-    
-   } catch (error) {
-    dispatch(hideLoading)
-    toast.error("Error getting the profile of Doctor.")
-    console.log("Error getting the profile of Doctor.")
-   }
+  };
+
+  const bookNow = async () =>{
+    try {
+      dispatch(showLoading)
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/book-appointment`,{
+        doctorId, userId: userState._id, date, selectedTimings
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      dispatch(hideLoading)
+      if(response.data.success){
+        toast.success(response.data.message)
+      }
+      
+    } catch (error) {
+      dispatch(hideLoading)
+      toast.error("Error booking appointment.")
+    }
   }
 
-  // const onFinish = async (values) => {
-  //   try {
-  //     const request = {...values, doctorTimings}
-
-  //     // console.log("Profile.js request: ", values);
-
-  //     dispatch(showLoading());
-  //     const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/update-doctor-account`, request, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`
-  //       }
-  //     });      
-  //     dispatch(hideLoading());
-
-  //     if (response.data.success) {
-  //       // console.log("update-doctor data success: ", response.data);
-  //       dispatch(setDoctor(values));
-  //       toast.success(response.data.message);
-  //       toast("Being redirected to Home page.");
-  //       navigate('/');
-  //     } else {
-  //       // console.log("Profile.js message: ", response.data)
-  //       toast.success(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     dispatch(hideLoading());
-  //     // console.log("Profile.js error: ", error)
-  //     toast.error("Something went wrong.")
-  //   }
-
-  // }
-
-  useEffect(()=>{  
-    if(!doctorData){
-      getDoctor();    
-    } 
-    
-    if(!doctorState && doctorData){
-      // setDoctorData(doctorState)
-      dispatch(setDoctor(doctorData))
+  useEffect(() => {
+    if (!doctorData) {
+      getDoctor();
     }
-  },[doctorData])
-
-
-  console.log("bookappointment.js: ", doctorData)
-  console.log("bookappointment.js doctorState: ", doctorState?.firstName)
-  // const {firstName, lastName} = doctorState;
+  }, [doctorData]);
+  // console.log("bookapointment.js: ", doctorId);
 
   return (
-    
     <Layout>
-      <h1 className='page-title'>Book Appointment</h1>
-      <hr/>
-      {/* <h2 className='page-title'>Dr. {doctorState.firstName} {doctorState.lastName}</h2> */}
-      {doctorId}
+      {doctorData && (
+        <div>
+          <h1 className="page-title">Book Appointment</h1>
+          <hr />
+          <h3 className="page-title">
+            {doctorData
+              ? `Dr. ${doctorData?.firstName} ${doctorData?.lastName} (${doctorData?.specialization})`
+              : null}
+          </h3>
+          <hr />
+            <h4 className="normal-text">
+              <b>Timings:</b> {doctorData.timings[0]}-{doctorData.timings[1]}
+            </h4>
+          <Row>
+            <Col span={8} lg={8} sm={24} xs={24}>
+              <div className="d-flex flex-column pt-2">
+                <DatePicker format="DD-MM-YYYY" onChange={(value)=>setDate(moment(value).format("DD-MM-YYYY"))}/>
+                <TimePicker.RangePicker format="HH:mm" className="mt-3" onChange={(values)=>setSelectedTimings([moment(values[0]).format("HH:mm"), moment(values[1]).format("HH:mm")])}/>
+                <Button className="primary-button mt-3 full-width-button">Check Availability</Button>
+                <Button className="primary-button mt-3 full-width-button" onClick={bookNow}>Book Now</Button>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      )}
     </Layout>
-  )
+  );
 }
 
-export default BookAppointment
+export default BookAppointment;

@@ -43,7 +43,7 @@ function Home() {
     }
   }, [doctorsList]);
 
-  console.log("home.js doctorsList: ", doctorsList);
+  // console.log("home.js doctorsList: ", doctorsList);
 
   return (
     <Layout>

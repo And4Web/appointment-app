@@ -76,6 +76,9 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// get doctor info 
+// book-appointment
+router.post('/book-appointment', authMiddleware, async (req, res)=>{
+  
+})
 
 module.exports = router;
