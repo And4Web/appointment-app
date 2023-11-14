@@ -4,6 +4,7 @@ const router = express.Router();
 
 const Doctor = require("../models/doctorModel");
 const User = require("../models/userModel");
+const Appointment = require('../models/appointmentModel');
 // authMiddleware,
 
 // get doctor profile by doctorId:
@@ -76,9 +77,8 @@ router.get("/all", async (req, res) => {
   }
 });
 
-// book-appointment
-router.post('/book-appointment', authMiddleware, async (req, res)=>{
-  
-})
+// approve the appointment request by user
+
+
 
 module.exports = router;

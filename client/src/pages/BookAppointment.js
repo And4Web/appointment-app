@@ -16,7 +16,7 @@ function BookAppointment() {
   const [doctorData, setDoctorData] = useState(null);
   const [isAvailable, setIsAvailable] = useState(false);
   const [date, setDate] = useState();
-  const [selectedTimings, setSelectedTimings] = useState();
+  const [time, setTime] = useState();
 
 
   const navigate = useNavigate();
@@ -69,8 +69,8 @@ function BookAppointment() {
   const bookNow = async () =>{
     try {
       dispatch(showLoading)
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/book-appointment`,{
-        doctorId, userId: userState._id, date, selectedTimings
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/book-appointment`,{
+        doctorId, userId: userState._id, date, time, doctorInfo: doctorData, userInfo: userState
       },
       {
         headers: {
@@ -93,6 +93,7 @@ function BookAppointment() {
       getDoctor();
     }
   }, [doctorData]);
+
   // console.log("bookapointment.js: ", doctorId);
 
   return (
@@ -114,7 +115,7 @@ function BookAppointment() {
             <Col span={8} lg={8} sm={24} xs={24}>
               <div className="d-flex flex-column pt-2">
                 <DatePicker format="DD-MM-YYYY" onChange={(value)=>setDate(moment(value).format("DD-MM-YYYY"))}/>
-                <TimePicker.RangePicker format="HH:mm" className="mt-3" onChange={(values)=>setSelectedTimings([moment(values[0]).format("HH:mm"), moment(values[1]).format("HH:mm")])}/>
+                <TimePicker format="HH:mm" className="mt-3" onChange={(value)=>setTime(moment(value).format("HH:mm"))}/>
                 <Button className="primary-button mt-3 full-width-button">Check Availability</Button>
                 <Button className="primary-button mt-3 full-width-button" onClick={bookNow}>Book Now</Button>
               </div>
