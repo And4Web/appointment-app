@@ -202,14 +202,22 @@ router.post("/book-appointment", authMiddleware, async (req, res) => {
     const newAppointment = await new Appointment(appointmentRequest);
     await newAppointment.save();
     
-    const doctor = await Doctor.findOne({doctorId: appointmentRequest.doctorInfo.doctorId})
+    const doctor = await Doctor.findOne({_id: appointmentRequest.doctorInfo.doctorId})
     const doctorUser = await User.findOne({_id: doctor.userId})
+
+    doctorUser.unseenNotifications.push({
+      type: "New-Appointment-Request",
+      message: `A new appointment request has been received from ${appointmentRequest.userInfo.name} on ${appointmentRequest.date} at ${appointmentRequest.time}.`,
+      onClickPath: '/doctor/appointments'
+    })
     
-    console.log(doctorUser) 
+    await doctorUser.save();
+    console.log(doctorUser.name) 
+
     return res.status(200).json({
       message: `Appointment Request sent.`,
       success: true,
-      appointmentId: newAppointment._id,
+      // appointmentId: newAppointment._id,
     });
   } catch (error) {
     console.log(error);

@@ -94,7 +94,7 @@ function BookAppointment() {
     }
   }, [doctorData]);
 
-  // console.log("bookapointment.js: ", doctorId);
+  // console.log("bookapointment.js: ", doctorData);
 
   return (
     <Layout>
