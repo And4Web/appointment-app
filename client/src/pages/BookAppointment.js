@@ -33,7 +33,7 @@ function BookAppointment() {
     if(response.data.success){   
       const {firstName,lastName, phoneNumber, specialization, feePerConsultation, doctorId: _id, timings} = response.data.data;   
       setDoctorData({firstName,lastName, phoneNumber, specialization, feePerConsultation, doctorId, timings}) 
-      dispatch(setDoctor(response.data.data))  
+      // dispatch(setDoctor(response.data.data))  
       // console.log(firstName,lastName, timings)            
     }else{
       toast.error(response.error)
@@ -79,16 +79,20 @@ function BookAppointment() {
 
   // }
 
-  useEffect(()=>{
+  useEffect(()=>{  
     if(!doctorData){
-      getDoctor();       
-      setDoctorData(doctorState)
-    }      
-  },[])
+      getDoctor();    
+    } 
+    
+    if(!doctorState && doctorData){
+      // setDoctorData(doctorState)
+      dispatch(setDoctor(doctorData))
+    }
+  },[doctorData])
 
 
   console.log("bookappointment.js: ", doctorData)
-  console.log("bookappointment.js doctorState: ", doctorState)
+  console.log("bookappointment.js doctorState: ", doctorState?.firstName)
   // const {firstName, lastName} = doctorState;
 
   return (
@@ -96,7 +100,7 @@ function BookAppointment() {
     <Layout>
       <h1 className='page-title'>Book Appointment</h1>
       <hr/>
-      <h2 className='page-title'>Dr. {doctorState.firstName} {doctorState.lastName}</h2>
+      {/* <h2 className='page-title'>Dr. {doctorState.firstName} {doctorState.lastName}</h2> */}
       {doctorId}
     </Layout>
   )
