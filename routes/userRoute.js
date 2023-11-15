@@ -207,12 +207,12 @@ router.post("/book-appointment", authMiddleware, async (req, res) => {
 
     doctorUser.unseenNotifications.push({
       type: "New-Appointment-Request",
-      message: `A new appointment request has been received from ${appointmentRequest.userInfo.name} on ${appointmentRequest.date} at ${appointmentRequest.time}.`,
+      message: `A new appointment request has been received from ${appointmentRequest.userInfo.name} for ${appointmentRequest.date} at ${appointmentRequest.time}.`,
       onClickPath: '/doctor/appointments'
     })
     
     await doctorUser.save();
-    console.log(doctorUser.name) 
+    // console.log(doctorUser.name) 
 
     return res.status(200).json({
       message: `Appointment Request sent.`,

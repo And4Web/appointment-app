@@ -1,6 +1,7 @@
 const express = require("express");
 const authMiddleware = require("../middlewares/authMiddleware");
 const router = express.Router();
+const moment = require('moment');
 
 const Doctor = require("../models/doctorModel");
 const User = require("../models/userModel");
@@ -76,6 +77,37 @@ router.get("/all", async (req, res) => {
     });
   }
 });
+
+// check availability
+router.post("/check-availability", authMiddleware, async(req, res)=>{
+  try {
+    const request = req.body;
+    const date = request.date;
+    const fromTime = moment(request.time).subtract(1,'hours').toISOString();
+    const toTime = moment(request.time).add(1,'hours').toISOString();
+    const appointments = await Appointment.find({doctorId: request.doctorId, date, time: {$gte: fromTime, $lte: toTime}});
+
+    if(appointments.length > 0){
+      // console.log(appointments);
+      return res.status(200).json({
+        message: "No slots available.",
+        success: false,
+      })
+    }else{
+      return res.status(200).json({
+        message: "Slot available.",
+        success: true,
+      })
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "can not gt the List of all the doctors in the database.",
+      success: false,
+      error,
+    });
+  }
+})
 
 // approve the appointment request by user
 
