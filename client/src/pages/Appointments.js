@@ -5,6 +5,7 @@ import {toast} from 'react-hot-toast'
 import {Table} from 'antd';
 import { hideLoading, showLoading } from '../redux/alertsSlice';
 import axios  from 'axios';
+import moment from 'moment';
 
 function Appointments() {
   const dispatch = useDispatch();
@@ -71,22 +72,28 @@ function Appointments() {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Doctor",
+      dataIndex: "doctor",
       render: (text, record) => (
-        <h1 className='normal-text'>{record.firstName} {record.lastName}</h1>
+        <h1 className='normal-text'>Dr. {record.doctorInfo.firstName} {record.doctorInfo.lastName}</h1>
       )
     },
     {
-      title: "Phone Number",
-      dataIndex: "phoneNumber"
+      title: "Appointment ID",
+      dataIndex: "appointmentId",
+      render: (text, record) => (
+        <h1 className='normal-text'>{record._id}</h1>
+      )
     },
     {
-      title: "Created At",
-      dataIndex: "createdAt"
+      title: "Date and Time",
+      dataIndex: "createdAt",
+      render: (text, record) => (
+        <h1 className='normal-text'>at {moment(record.time).format("HH:mm")} on {moment(record.date).format("DD-MM-YYYY")}</h1>
+      )
     },
     {
-      title: "status",
+      title: "Status",
       dataIndex: "status"
     },
     
@@ -96,7 +103,7 @@ function Appointments() {
     <Layout>
       <h1 className='page-title'>Appointments</h1>
       <hr/>
-      {/* <Table columns={columns} dataSource={appointments}/> */}
+      <Table columns={columns} dataSource={appointments}/>
 
     </Layout>
   )

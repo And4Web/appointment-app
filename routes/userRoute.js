@@ -233,7 +233,7 @@ router.post("/book-appointment", authMiddleware, async (req, res) => {
 router.get("/get-appointments", authMiddleware, async (req, res)=>{
   try {
     // console.log("Request >>> ", req.body)
-    const appointments = await Appointment.findOne({userId: req.body.userId});
+    const appointments = await Appointment.find({userId: req.body.userId});
 
   return res.status(200).json({
     message: "Appointment List fetched",
