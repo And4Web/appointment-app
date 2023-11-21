@@ -68,6 +68,7 @@ function BookAppointment() {
 
   const bookNow = async () =>{
     try {
+      setIsAvailable(false)
       dispatch(showLoading)
       
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/book-appointment`,{
@@ -81,6 +82,7 @@ function BookAppointment() {
       dispatch(hideLoading)
       if(response.data.success){
         toast.success(response.data.message)
+        setIsAvailable(false)
       }
       
     } catch (error) {
@@ -123,7 +125,7 @@ function BookAppointment() {
     }
   }, [doctorData]);
 
-  // console.log("bookapointment.js: ", doctorData);
+  console.log("bookapointment.js: ", doctorData);
 
   return (
     <Layout>
@@ -133,22 +135,41 @@ function BookAppointment() {
           <hr />
           <h3 className="page-title">
             {doctorData
-              ? `Dr. ${doctorData?.firstName} ${doctorData?.lastName} (${doctorData?.specialization})`
+              ? `Dr. ${doctorData?.firstName} ${doctorData?.lastName} `
               : null}
           </h3>
           <hr />
+          <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
             <h4 className="normal-text">
               <b>Timings:</b> {doctorData.timings[0]}-{doctorData.timings[1]}
             </h4>
-          <Row>
+            <div>
+              <h4 className="page-title ">Doctor Information</h4>
+              <hr/>
+              <h4 className="normal-text">
+              <b>Specialization:</b> {doctorData.specialization}
+            </h4>
+            <h4 className="normal-text">
+              <b>Fee per consultation:</b> &#8377;{doctorData.feePerConsultation}
+            </h4>
+            </div>
+
+          </div>
+          <Row gutter={20}>
             <Col span={8} lg={8} sm={24} xs={24}>
               <div className="d-flex flex-column pt-2">
                 <DatePicker format="DD-MM-YYYY" onChange={(value)=>setDate(moment(value).format("DD-MM-YYYY"))}/>
                 <TimePicker format="HH:mm" className="mt-3" onChange={(value)=>setTime(moment(value).format("HH:mm"))}/>
                 <Button className="primary-button mt-3 full-width-button" onClick={checkAvalability}>Check Availability</Button>
-                <Button className="primary-button mt-3 full-width-button" onClick={bookNow}>Book Now</Button>
+                {isAvailable && <Button className="primary-button mt-3 full-width-button" onClick={bookNow}>Book Now</Button>}
               </div>
             </Col>
+            {/* <Col span={8} sm={24} xs={24} lg={8}>
+              <div className="d-flex flex-column pt-2 ">
+                
+                <hr/>
+              </div>
+            </Col> */}
           </Row>
         </div>
       )}

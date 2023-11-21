@@ -229,4 +229,26 @@ router.post("/book-appointment", authMiddleware, async (req, res) => {
   }
 });
 
+// get appointments
+router.get("/get-appointments", authMiddleware, async (req, res)=>{
+  try {
+    // console.log("Request >>> ", req.body)
+    const appointments = await Appointment.findOne({userId: req.body.userId});
+
+  return res.status(200).json({
+    message: "Appointment List fetched",
+    success: true,
+    data: appointments
+  })
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Error getting appointments at this moment.",
+      success: false,
+      error,
+    });
+  }
+  
+})
+
 module.exports = router;
