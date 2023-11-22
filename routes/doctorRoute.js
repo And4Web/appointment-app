@@ -152,15 +152,15 @@ router.post("/change-appointment-status", authMiddleware, async (req, res)=>{
     const appointment = await Appointment.findOne({_id: request.appointmentId});
     patient.unseenNotifications.push({
       type: "Appointment-Request-Approval",
-      message: `Dr. ${request.doctor} has approved your appointment request on ${moment(appointment.date).format("DD-MM-YYYY")} at ${moment(appointment.time).format("HH:mm")}`,
+      message: `Dr. ${request.doctor} has ${request.status} your appointment request on ${moment(appointment.date).format("DD-MM-YYYY")} at ${moment(appointment.time).format("HH:mm")}`,
       onClickPath: '/doctor/appointments'
     })
-    appointment.status = "approved";
+    appointment.status = request.status;
     await patient.save();
     await appointment.save();
 
     return res.status(200).json({
-      message: `Dr. ${request.doctor} has approved your appointment request on ${moment(appointment.date).format("DD-MM-YYYY")} at ${moment(appointment.time).format("HH:mm")}`,
+      message: `Dr. ${request.doctor} has ${request.status} your appointment request on ${moment(appointment.date).format("DD-MM-YYYY")} at ${moment(appointment.time).format("HH:mm")}`,
       success: true,
       appointment: appointment.status
     })

@@ -35,7 +35,7 @@ function DoctorAppointments() {
     }
   }
 
-  const changeAppointmentStatus = async (record) => {
+  const changeAppointmentStatus = async (record, status) => {
     try {
       const payload = {
         patientUserId: record.userInfo._id,
@@ -43,7 +43,7 @@ function DoctorAppointments() {
         doctorId: record.doctorId,
         doctor: `${record.doctorInfo.firstName} ${record.doctorInfo.lastName}`,
         appointmentId: record._id,
-        status: ""
+        status
       }
       dispatch(showLoading)
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/change-appointment-status`, payload, {headers: {
@@ -51,10 +51,10 @@ function DoctorAppointments() {
       }})
       dispatch(hideLoading);
       if(response.data){
-        toast.success("Appointment approved successfully.")
+        toast.success(`Appointment ${response.data.appointment}.`)
         
       }else{
-        toast.error("Appointment request rejected.")
+        toast.error(`Appointment ${response.data.appointment}.`)
         console.log('DoctorsList.js response errors: ', response)
       }
     } catch (error) {
@@ -100,12 +100,23 @@ function DoctorAppointments() {
       
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      
+    },
+    {
       title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
         <div className='d-flex'>
-          {record.status === "pending" && <p className='anchor' onClick={()=>changeAppointmentStatus(record)}>Approve</p>}
-          {record.status === "approved" && <p className='anchor'>Approved</p>}
+          {record.status === "pending" && (
+              <div>
+                 <p className='anchor' onClick={()=>changeAppointmentStatus(record, "Approved")}>Approve</p>
+                <p className='anchor' onClick={()=>changeAppointmentStatus(record, "Rejected")}>Reject</p>     
+          
+              </div>
+          )
+          }     
         </div>
       )
     }
