@@ -109,8 +109,72 @@ router.post("/check-availability", authMiddleware, async(req, res)=>{
   }
 })
 
-// approve the appointment request by user
+// get appointments
+router.get("/get-appointments", authMiddleware, async (req, res)=>{
+  try {
+    // console.log("Request >>> ", req.body.userId)
+    const userId = req.body.userId;
+    const user = await User.findOne({_id: userId});
+    // console.log("User >>>", user._id);
+    if(!user.isDoctor){
+      return res.status(400).json({
+        message: "Trying to find wrong data.",
+        success: false,
+        data: []
+      })
+    }
+    const doctor = await Doctor.findOne({userId: user._id})
+    const appointments = await Appointment.find({doctorId: doctor._id});
 
+  return res.status(200).json({
+    message: "Appointment List fetched",
+    success: true,
+    data: appointments
+  })
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Error getting appointments at this moment.",
+      success: false,
+      error,
+    });
+  }
+  
+})
+
+
+// approve the appointment request by user
+router.post("/change-appointment-status", authMiddleware, async (req, res)=>{
+  try {
+    const request = req.body;
+    // console.log("request >>> ", request) 
+    const patient = await User.findOne({_id: request.patientUserId});
+    const appointment = await Appointment.findOne({_id: request.appointmentId});
+    patient.unseenNotifications.push({
+      type: "Appointment-Request-Approval",
+      message: `Dr. ${request.doctor} has approved your appointment request on ${moment(appointment.date).format("DD-MM-YYYY")} at ${moment(appointment.time).format("HH:mm")}`,
+      onClickPath: '/doctor/appointments'
+    })
+    appointment.status = "approved";
+    await patient.save();
+    await appointment.save();
+
+    return res.status(200).json({
+      message: `Dr. ${request.doctor} has approved your appointment request on ${moment(appointment.date).format("DD-MM-YYYY")} at ${moment(appointment.time).format("HH:mm")}`,
+      success: true,
+      appointment: appointment.status
+    })
+    
+    
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Error getting appointments at this moment.",
+      success: false,
+      error,
+    });
+  }
+})
 
 
 module.exports = router;

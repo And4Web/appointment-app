@@ -82,7 +82,7 @@ function Layout({ children }) {
     },
     {
       name: "Appointments",
-      path: "/appointments",
+      path: "/doctor/appointments",
       icon: "ri-list-check",
     },
     {
