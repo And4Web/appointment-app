@@ -21,7 +21,7 @@ function Appointments() {
       
       dispatch(hideLoading)
       if(response.data.success){
-        toast.success(response.data.message)
+        // toast.success(response.data.message)
         // console.log("Appointments.js response: ", response.data);
         setAppointments(response.data?.data);
       }else{
@@ -68,7 +68,7 @@ function Appointments() {
     
   },[])
 
-  console.log("Appointments.js all appointments: ", appointments);
+  // console.log("Appointments.js all appointments: ", appointments);
 
   const columns = [
     {
@@ -76,25 +76,29 @@ function Appointments() {
       dataIndex: "doctor",
       render: (text, record) => (
         <h1 className='normal-text'>Dr. {record.doctorInfo.firstName} {record.doctorInfo.lastName}</h1>
-      )
+      ),
+      
     },
     {
       title: "Appointment ID",
       dataIndex: "appointmentId",
       render: (text, record) => (
-        <h1 className='normal-text'>{record._id}</h1>
-      )
+        <p className='normal-text'>{record._id}</p>
+      ),
+      
     },
     {
       title: "Date and Time",
       dataIndex: "createdAt",
       render: (text, record) => (
-        <h1 className='normal-text'>at {moment(record.time).format("HH:mm")} on {moment(record.date).format("DD-MM-YYYY")}</h1>
-      )
+        <p className='normal-text'>at {moment(record.time).format("HH:mm")} on {moment(record.date).format("DD-MM-YYYY")}</p>
+      ),
+      
     },
     {
       title: "Status",
-      dataIndex: "status"
+      dataIndex: "status",
+      
     },
     
   ]
@@ -103,8 +107,7 @@ function Appointments() {
     <Layout>
       <h1 className='page-title'>Appointments</h1>
       <hr/>
-      <Table columns={columns} dataSource={appointments}/>
-
+      <Table columns={columns} dataSource={appointments} pagination={false}/>
     </Layout>
   )
 }

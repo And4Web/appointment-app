@@ -3,6 +3,7 @@ const router = express.Router();
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const moment = require('moment');
 const authMiddleware = require("../middlewares/authMiddleware");
 
 const Doctor = require("../models/doctorModel");
@@ -207,7 +208,7 @@ router.post("/book-appointment", authMiddleware, async (req, res) => {
 
     doctorUser.unseenNotifications.push({
       type: "New-Appointment-Request",
-      message: `A new appointment request has been received from ${appointmentRequest.userInfo.name} for ${appointmentRequest.date} at ${appointmentRequest.time}.`,
+      message: `A new appointment request has been received from ${appointmentRequest.userInfo.name} for ${moment(appointmentRequest.time).format("HH:mm")} on ${moment(appointmentRequest.date).format("DD-MM-YYYY")}.`,
       onClickPath: '/doctor/appointments'
     })
     
