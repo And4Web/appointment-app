@@ -30,13 +30,10 @@ function UserProfile() {
     dispatch(hideLoading)    
 
     if(response.data.success){ 
-      setUserData(response.data.data)     
-      // dispatch(setDoctor(response.data.data));    
-      toast.success(response.data.message);  
-      console.log("UserProfile.js success: ", response.data.loggedinUser)  
+      setUserData(response.data.data)        
+      toast.success(response.data.message); 
     }else{
       toast.error(response.error)
-      console.log("UserProfile.js UserData error: ", response.error)
     }
     
    } catch (error) {
@@ -46,38 +43,7 @@ function UserProfile() {
    }
   }
 
-  // const onFinish = async (values) => {
-  //   try {
-  //     const request = {...values, doctorTimings}
-
-  //     // console.log("Profile.js request: ", values);
-
-  //     dispatch(showLoading());
-  //     const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/doctor/update-doctor-account`, request, {
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`
-  //       }
-  //     });      
-  //     dispatch(hideLoading());
-
-  //     if (response.data.success) {
-  //       // console.log("update-doctor data success: ", response.data);
-  //       dispatch(setDoctor(values));
-  //       toast.success(response.data.message);
-  //       toast("Being redirected to Home page.");
-  //       navigate('/');
-  //     } else {
-  //       // console.log("Profile.js message: ", response.data)
-  //       toast.success(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     dispatch(hideLoading());
-  //     // console.log("Profile.js error: ", error)
-  //     toast.error("Something went wrong.")
-  //   }
-
-  // }
-
+  
   useEffect(()=>{
     if(!userData ){
       getUser();       
