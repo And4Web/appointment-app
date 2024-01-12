@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors')
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
+const path = require('path');
 
 // Connect MongoDB
 const dbConfig = require("./config/dbConfig");
@@ -31,6 +32,15 @@ app.get("/api/users", async (req, res)=>{
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/doctor", doctorRoute);
+
+
+// Heroku build configuration
+if(process.env.NODE_ENV === "PRODUCTION"){
+  app.use('/' . express.static("client/build"));
+  app.get("*", (req, res)=>{
+    res.sendFile(path.resolve(__dirname, "client/build/index.html"));
+  });
+}
 
 // start server
 app.listen(PORT, () => console.log(`Node Server running at port: ${PORT}.`));
