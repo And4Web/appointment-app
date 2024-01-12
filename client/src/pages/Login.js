@@ -20,12 +20,10 @@ function Login() {
         values
       );
       dispatch(hideLoading());
-      // console.log("response Login.js: ", response.data)
 
       if (response.data.success) {
-        toast.success(response.data.success);
+        toast.success(response.data.message);
         const token = localStorage.setItem("token", response.data.token);
-        toast("Redirecting to home page.");
         navigate("/");
       } else {
         dispatch(hideLoading());
@@ -34,14 +32,13 @@ function Login() {
     } catch (error) {
       dispatch(hideLoading());
       toast.error("Error Logging you in");
+      console.log("Login.js Error: ", error);
     }
-    // console.log("input from the form: ", values)
-    // console.log("response from the server: ", response.data)
   };
 
   const showPasswordHandler = () => {
-    setShowPassword(!showPassword)
-  }
+    setShowPassword(!showPassword);
+  };
 
   return (
     <div className="authentication">
@@ -53,13 +50,16 @@ function Login() {
           </Form.Item>
 
           <Form.Item label="Password" name="password">
-            <Input type={`${showPassword ? "text" : "password"}`} placeholder="Enter your password" />
+            <Input
+              type={`${showPassword ? "text" : "password"}`}
+              placeholder="Enter your password"
+            />
           </Form.Item>
           <div className="password-input" onClick={showPasswordHandler}>
             {!showPassword ? (
-              <i className="ri-eye-line" ></i>
+              <i className="ri-eye-line"></i>
             ) : (
-              <i className="ri-eye-off-line" ></i>
+              <i className="ri-eye-off-line"></i>
             )}
             <p>{!showPassword ? "Show Password" : "Hide Password"}</p>
           </div>

@@ -84,16 +84,18 @@
   box-shadow: 0 0 3px grey;
   border-radius: 5px;
   height: 84vh;
-  overflow-y: scroll;
-  overflow-x: scroll;
+  overflow-y: scroll !important;
+  overflow-x: scroll !important;
 }
-.content-body::-webkit-scrollbar {
+/* .content-body::-webkit-scrollbar {
   display: none;
-}
+} */
+/*
 .content-body {
   -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
+ /* scrollbar-width: none; */ /* Firefox */
+/*}
+*/
 .cursor-pointer{
   cursor: pointer;
 }
@@ -176,6 +178,10 @@
   .collapsed-sidebar{
     min-width: 15%
   }
+  .content-body{
+    overflow-y: scroll;
+    overflow-x: scroll;
+  }
 }
 @media screen and (max-width: 780px) {
   .main{
@@ -195,7 +201,7 @@
     display: none;
   } */
 
-}
+/* } */
 .header-right{
   display: flex ;
   align-items: center ;
@@ -206,6 +212,12 @@
   text-decoration: underline;
   font-size: 1rem;
 }
+.content-body{
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+}
+
 @media screen and (max-width: 650px) {
   .main{
     padding: .6rem;
@@ -235,6 +247,10 @@
     font-size: 3.2rem;
     padding: .3rem;
   }
+  .content-body{
+    overflow-y: scroll;
+    overflow-x: scroll;
+  }
   
 }
 @media screen and (max-width: 520px) {
@@ -247,6 +263,10 @@
   .sidebar-header h1{
     font-size: 3rem;
     padding: .3rem;
+  }
+  .content-body{
+    overflow-y: scroll;
+    overflow-x: scroll;
   }
  
 }

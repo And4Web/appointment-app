@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Input, Button } from "antd";
 import axios from "axios";
@@ -13,31 +13,31 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
 
   const showPasswordHandler = () => {
-    setShowPassword(!showPassword)
-  }
+    setShowPassword(!showPassword);
+  };
 
   const onFinish = async (values) => {
     try {
       dispatch(showLoading());
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/user/register`, values);      
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API_URL}/user/register`,
+        values
+      );
       dispatch(hideLoading());
 
       if (response.data.success) {
-        console.log("Register.js data success: ", response.data)
         toast.success(response.data.message);
-        toast("Being redirected to Login page.");
-        navigate('/login');
       } else {
-        // console.log("Register.js message: ", response.data)
         toast.success(response.data.message);
       }
+
+      navigate("/login");
+      toast.success("Being redirected to Login page.");
     } catch (error) {
       dispatch(hideLoading());
-      // console.log("Register.js error: ", error)
-      toast.error("Something went wrong.")
+      console.log("Register.js error: ", error);
+      toast.error("Something went wrong.");
     }
-
-    // console.log("input from the Register.js: ", values)
   };
 
   return (
@@ -52,14 +52,17 @@ function Register() {
             <Input type="email" placeholder="Enter your email" />
           </Form.Item>
           <Form.Item label="Password" name="password">
-            <Input type={`${showPassword ? "text" : "password"}`} placeholder="Enter your password" />
+            <Input
+              type={`${showPassword ? "text" : "password"}`}
+              placeholder="Enter your password"
+            />
           </Form.Item>
 
           <div className="password-input" onClick={showPasswordHandler}>
             {!showPassword ? (
-              <i className="ri-eye-line" ></i>
+              <i className="ri-eye-line"></i>
             ) : (
-              <i className="ri-eye-off-line" ></i>
+              <i className="ri-eye-off-line"></i>
             )}
             <p>{!showPassword ? "Show Password" : "Hide Password"}</p>
           </div>

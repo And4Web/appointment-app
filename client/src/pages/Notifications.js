@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {showLoading, hideLoading} from '../redux/alertsSlice';
 import axios from 'axios';
 import {toast} from 'react-hot-toast';
-// import {} from '../redux/userSlice';
+
 
 function Notifications() {
   const navigate = useNavigate();
@@ -27,8 +27,7 @@ function Notifications() {
     }
   },[userState])
   
-  // console.log('Notifications.js, unseenNotifications: ',unseenNotifications);
-  // console.log("Notification.js, user: ", userId)
+ 
 
   const markAllAsSeen = async (values) => {
     try {
@@ -44,6 +43,7 @@ function Notifications() {
         let toastMessage = unseenNotifications.length !== 0 ? response.data.message : "No Notifications available at this moment."
         toast.success(toastMessage);
         setUnseenNotifications(response.data.unseenNotifications? []: [])
+        setSeenNotifications(unseenNotifications)
       }else{
         toast.error(response.data.message);
       }
@@ -80,7 +80,7 @@ function Notifications() {
     <Layout>
       <h1 className='page-title'>Notifications</h1>
     
-      {/* <hr/> */}
+     
       <Tabs>
         <Tabs.TabPane tab="Unseen" key={0}>
           <div className="d-flex justify-content-end" onClick={()=>markAllAsSeen()}><h6 className='anchor'>Mark all as seen</h6></div>

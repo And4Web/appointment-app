@@ -7,7 +7,8 @@ import { Badge } from "antd";
 function Layout({ children }) {
   const userState = useSelector((state) => state.user.user);
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useNavigate();  
+
 
   const [collapsed, setCollapsed] = useState(false);
   const [user, setUser] = useState("");
@@ -16,6 +17,7 @@ function Layout({ children }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isDoctor, setIsDoctor] = useState(false);
   const [doctorId, setDoctorId] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   let userFirstName = user.split(" ")[0];
 
@@ -26,6 +28,7 @@ function Layout({ children }) {
       setIsDoctor(userState.isDoctor);
       setUnseeNotifications(userState.unseenNotifications);
       setDoctorId(userState.doctorId);
+      setUserId(userState._id);
     }
   }, [userState]);
 
@@ -45,11 +48,11 @@ function Layout({ children }) {
       path: "/apply-doctor",
       icon: "ri-hospital-line",
     },
-    {
-      name: "Profile",
-      path: "/profile",
-      icon: "ri-profile-line",
-    },
+    // {
+    //   name: "Profile",
+    //   path: "/profile",
+    //   icon: "ri-profile-line",
+    // },
   ];
   const adminMenu = [
     {
@@ -67,11 +70,11 @@ function Layout({ children }) {
       path: "/admin/doctorslist",
       icon: "ri-user-heart-fill",
     },
-    {
-      name: "Profile",
-      path: "/profile",
-      icon: "ri-profile-line",
-    },
+    // {
+    //   name: "Profile",
+    //   path: "/user/profile/userId",
+    //   icon: "ri-profile-line",
+    // },
   ];
 
   const doctorMenu = [
@@ -157,7 +160,7 @@ function Layout({ children }) {
                   <i className="ri-notification-line header-action-icon px-3 notification-bell"></i>
                 </Badge>
               </div>
-              <Link to="/profile" className="header-user mx-2">
+              <Link to={`/user/profile/${userId}`} className="header-user mx-2">
                 {userFirstName}
               </Link>
             </div>

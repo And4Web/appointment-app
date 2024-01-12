@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
       });
       return res
         .status(200)
-        .json({ message: "token generated", success: true, token: token });
+        .json({ message: `Welcome back ${user.name}`, success: true, token: token });
     }
   } catch (error) {
     return res.status(500).json({ message: "Something went wrong", error });
