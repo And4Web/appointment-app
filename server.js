@@ -34,13 +34,6 @@ app.use("/api/admin", adminRoute);
 app.use("/api/doctor", doctorRoute);
 
 
-// Heroku build configuration
-if(process.env.NODE_ENV === "PRODUCTION"){
-  app.use('/' . express.static("client/build"));
-  app.get("*", (req, res)=>{
-    res.sendFile(path.resolve(__dirname, "client/build/index.html"));
-  });
-}
 
 // start server
 app.listen(PORT, () => console.log(`Node Server running at port: ${PORT}.`));
