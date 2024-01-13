@@ -41,7 +41,7 @@ function Login() {
   };
 
   return (
-    <div className="authentication">
+    <div className="authentication" style={{display: "flex", flexDirection: "column"}}>
       <div className="authentication-form card p-3">
         <h1 className=" card-title ">Welcome back</h1>
         <Form layout="vertical" onFinish={onFinish}>
@@ -71,6 +71,13 @@ function Login() {
             New User? Register here
           </Link>
         </Form>
+      </div>
+      <div style={{marginTop: "2rem",display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+        <h6 style={{color: "red"}}>Sample logins for recruiters:</h6>
+        <p style={{color: "red"}}> Admin: ahadmin@gmail.com, Password: admin123</p>
+        <p style={{color: "red"}}> user: umesh@gmail.com, Password: umesh123</p>
+        <p style={{color: "red"}}> doctor: shivani@gmail.com, Password: shivani123</p>
+
       </div>
     </div>
   );
